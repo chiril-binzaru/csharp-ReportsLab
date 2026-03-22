@@ -62,7 +62,7 @@ namespace ReportsLab.Forms
             pnlTop.Dock = DockStyle.Fill;
             pnlTop.Location = new Point(3, 3);
             pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(768, 40);
+            pnlTop.Size = new Size(768, 52);
             pnlTop.TabIndex = 0;
             // 
             // btnRefresh
@@ -92,13 +92,13 @@ namespace ReportsLab.Forms
             dgvProducts.BorderStyle = BorderStyle.None;
             dgvProducts.ColumnHeadersHeight = 29;
             dgvProducts.Dock = DockStyle.Fill;
-            dgvProducts.Location = new Point(3, 49);
+            dgvProducts.Location = new Point(3, 61);
             dgvProducts.MultiSelect = false;
             dgvProducts.Name = "dgvProducts";
             dgvProducts.ReadOnly = true;
             dgvProducts.RowHeadersWidth = 51;
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducts.Size = new Size(768, 309);
+            dgvProducts.Size = new Size(768, 297);
             dgvProducts.TabIndex = 1;
             dgvProducts.SelectionChanged += dgvProducts_SelectionChanged;
             // 
@@ -119,7 +119,7 @@ namespace ReportsLab.Forms
             fieldsCard.Controls.Add(btnClear);
             fieldsCard.Depth = 0;
             fieldsCard.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            fieldsCard.Location = new Point(14, 375);
+            fieldsCard.Location = new Point(0, 361);
             fieldsCard.Margin = new Padding(0);
             fieldsCard.MouseState = MaterialSkin.MouseState.HOVER;
             fieldsCard.Name = "fieldsCard";
@@ -154,7 +154,7 @@ namespace ReportsLab.Forms
             txtProductName.MouseState = MaterialSkin.MouseState.OUT;
             txtProductName.Multiline = false;
             txtProductName.Name = "txtProductName";
-            txtProductName.Size = new Size(422, 48);
+            txtProductName.Size = new Size(422, 50);
             txtProductName.TabIndex = 1;
             txtProductName.Text = "";
             txtProductName.TrailingIcon = null;
@@ -173,7 +173,7 @@ namespace ReportsLab.Forms
             txtCategory.MouseState = MaterialSkin.MouseState.OUT;
             txtCategory.Multiline = false;
             txtCategory.Name = "txtCategory";
-            txtCategory.Size = new Size(322, 48);
+            txtCategory.Size = new Size(322, 50);
             txtCategory.TabIndex = 2;
             txtCategory.Text = "";
             txtCategory.TrailingIcon = null;
