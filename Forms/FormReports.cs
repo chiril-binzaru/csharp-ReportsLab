@@ -1,14 +1,17 @@
+using MaterialSkin;
+using MaterialSkin.Controls;
 using Microsoft.Data.SqlClient;
 using Microsoft.Reporting.WinForms;
 using ReportsLab.Data;
 
 namespace ReportsLab.Forms
 {
-    public partial class FormReports : Form
+    public partial class FormReports : MaterialForm
     {
         public FormReports()
         {
             InitializeComponent();
+            MaterialSkinManager.Instance.AddFormToManage(this);
         }
 
         private void FormReports_Load(object sender, EventArgs e)
@@ -24,7 +27,7 @@ namespace ReportsLab.Forms
 
         private void cmbReport_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool isPeriod = cmbReport.SelectedIndex == 1;
+            bool isPeriod   = cmbReport.SelectedIndex == 1;
             lblFrom.Visible = isPeriod;
             dtpFrom.Visible = isPeriod;
             lblTo.Visible   = isPeriod;
@@ -39,7 +42,7 @@ namespace ReportsLab.Forms
 
                 switch (cmbReport.SelectedIndex)
                 {
-                    case 0: // Product List
+                    case 0:
                         var products = DatabaseClient.ExecuteQuery(DatabaseClient.GetProductsForReport);
                         reportViewer1.LocalReport.ReportEmbeddedResource =
                             "ReportsLab.Reports.ReportProducts.rdlc";
@@ -47,7 +50,7 @@ namespace ReportsLab.Forms
                             new ReportDataSource("ProductsData", products));
                         break;
 
-                    case 1: // Sales by Period
+                    case 1:
                         var sales = DatabaseClient.ExecuteQuery(DatabaseClient.GetSalesByPeriod,
                             new SqlParameter("@StartDate", dtpFrom.Value.Date),
                             new SqlParameter("@EndDate",   dtpTo.Value.Date));
@@ -57,7 +60,7 @@ namespace ReportsLab.Forms
                             new ReportDataSource("SalesData", sales));
                         break;
 
-                    case 2: // Top-Selling Products
+                    case 2:
                         var top = DatabaseClient.ExecuteQuery(DatabaseClient.GetTopProducts);
                         reportViewer1.LocalReport.ReportEmbeddedResource =
                             "ReportsLab.Reports.ReportTopProducts.rdlc";

@@ -1,3 +1,5 @@
+using MaterialSkin.Controls;
+
 namespace ReportsLab.Forms
 {
     partial class FormReports
@@ -12,95 +14,87 @@ namespace ReportsLab.Forms
 
         private void InitializeComponent()
         {
-            pnlTop        = new Panel();
-            lblReport     = new Label();
-            cmbReport     = new ComboBox();
-            lblFrom       = new Label();
-            dtpFrom       = new DateTimePicker();
-            lblTo         = new Label();
-            dtpTo         = new DateTimePicker();
-            btnGenerate   = new Button();
+            pnlTop        = new System.Windows.Forms.Panel();
+            cmbReport     = new MaterialComboBox();
+            lblFrom       = new MaterialLabel();
+            dtpFrom       = new System.Windows.Forms.DateTimePicker();
+            lblTo         = new MaterialLabel();
+            dtpTo         = new System.Windows.Forms.DateTimePicker();
+            btnGenerate   = new MaterialButton();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             SuspendLayout();
 
             // ── pnlTop ───────────────────────────────────────────────────────────
-            pnlTop.Dock    = DockStyle.Top;
-            pnlTop.Height  = 58;
-            pnlTop.Controls.AddRange(new Control[]
+            pnlTop.Dock   = System.Windows.Forms.DockStyle.Top;
+            pnlTop.Height = 72;
+            pnlTop.Controls.AddRange(new System.Windows.Forms.Control[]
             {
-                lblReport, cmbReport,
-                lblFrom, dtpFrom,
-                lblTo,   dtpTo,
-                btnGenerate
+                cmbReport, lblFrom, dtpFrom, lblTo, dtpTo, btnGenerate
             });
 
-            // lblReport
-            lblReport.Text      = "Report:";
-            lblReport.Location  = new Point(10, 18);
-            lblReport.Size      = new Size(52, 23);
-            lblReport.TextAlign = ContentAlignment.MiddleLeft;
-
             // cmbReport
-            cmbReport.Location      = new Point(64, 15);
-            cmbReport.Size          = new Size(190, 23);
-            cmbReport.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbReport.Hint                  = "Report Type";
+            cmbReport.Location              = new Point(10, 12);
+            cmbReport.Size                  = new Size(230, 48);
+            cmbReport.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbReport.SelectedIndexChanged += cmbReport_SelectedIndexChanged;
 
-            // lblFrom (hidden unless Report 2 is selected)
+            // lblFrom (hidden unless Sales by Period)
             lblFrom.Text      = "From:";
-            lblFrom.Location  = new Point(268, 18);
-            lblFrom.Size      = new Size(44, 23);
-            lblFrom.TextAlign = ContentAlignment.MiddleLeft;
+            lblFrom.Location  = new Point(256, 30);
+            lblFrom.Size      = new Size(42, 23);
+            lblFrom.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblFrom.Visible   = false;
 
             // dtpFrom
-            dtpFrom.Location = new Point(314, 15);
-            dtpFrom.Size     = new Size(130, 23);
-            dtpFrom.Format   = DateTimePickerFormat.Short;
+            dtpFrom.Location = new Point(301, 28);
+            dtpFrom.Size     = new Size(140, 23);
+            dtpFrom.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
             dtpFrom.Value    = DateTime.Today.AddMonths(-1);
             dtpFrom.Visible  = false;
 
             // lblTo
-            lblTo.Text      = "To:";
-            lblTo.Location  = new Point(454, 18);
-            lblTo.Size      = new Size(26, 23);
-            lblTo.TextAlign = ContentAlignment.MiddleLeft;
-            lblTo.Visible   = false;
+            lblTo.Text     = "To:";
+            lblTo.Location = new Point(452, 30);
+            lblTo.Size     = new Size(28, 23);
+            lblTo.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
+            lblTo.Visible  = false;
 
             // dtpTo
-            dtpTo.Location = new Point(482, 15);
-            dtpTo.Size     = new Size(130, 23);
-            dtpTo.Format   = DateTimePickerFormat.Short;
+            dtpTo.Location = new Point(483, 28);
+            dtpTo.Size     = new Size(140, 23);
+            dtpTo.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
             dtpTo.Value    = DateTime.Today;
             dtpTo.Visible  = false;
 
             // btnGenerate
-            btnGenerate.Text     = "Generate Report";
-            btnGenerate.Location = new Point(820, 13);
-            btnGenerate.Size     = new Size(130, 30);
-            btnGenerate.Click   += btnGenerate_Click;
+            btnGenerate.Text         = "GENERATE REPORT";
+            btnGenerate.Location     = new Point(820, 18);
+            btnGenerate.Size         = new Size(170, 36);
+            btnGenerate.Type         = MaterialButton.MaterialButtonType.Contained;
+            btnGenerate.HighEmphasis = true;
+            btnGenerate.Click       += btnGenerate_Click;
 
             // ── reportViewer1 ────────────────────────────────────────────────────
-            reportViewer1.Dock = DockStyle.Fill;
+            reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
 
             // ── FormReports ──────────────────────────────────────────────────────
-            ClientSize    = new Size(980, 680);
-            StartPosition = FormStartPosition.CenterParent;
+            ClientSize    = new Size(1020, 700);
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text          = "Reports";
-            Controls.Add(reportViewer1);   // add Fill control first
-            Controls.Add(pnlTop);          // then Top panel (paints over fill top edge)
+            Controls.Add(reportViewer1);
+            Controls.Add(pnlTop);
             Load += FormReports_Load;
             ResumeLayout(false);
         }
 
-        private Panel                                pnlTop;
-        private Label                                lblReport;
-        private ComboBox                             cmbReport;
-        private Label                                lblFrom;
-        private DateTimePicker                       dtpFrom;
-        private Label                                lblTo;
-        private DateTimePicker                       dtpTo;
-        private Button                               btnGenerate;
+        private System.Windows.Forms.Panel          pnlTop;
+        private MaterialComboBox                    cmbReport;
+        private MaterialLabel                       lblFrom;
+        private System.Windows.Forms.DateTimePicker dtpFrom;
+        private MaterialLabel                       lblTo;
+        private System.Windows.Forms.DateTimePicker dtpTo;
+        private MaterialButton                      btnGenerate;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }
 }

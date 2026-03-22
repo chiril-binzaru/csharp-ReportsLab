@@ -1,17 +1,20 @@
+using MaterialSkin;
+using MaterialSkin.Controls;
 using Microsoft.Data.SqlClient;
 using ReportsLab.Data;
 using System.Data;
 
 namespace ReportsLab.Forms
 {
-    public partial class FormSales : Form
+    public partial class FormSales : MaterialForm
     {
         private int _selectedSaleId    = -1;
-        private int _selectedProductId = -1;  // needed for stock rollback on update/delete
+        private int _selectedProductId = -1;
 
         public FormSales()
         {
             InitializeComponent();
+            MaterialSkinManager.Instance.AddFormToManage(this);
         }
 
         private void FormSales_Load(object sender, EventArgs e)
@@ -58,7 +61,6 @@ namespace ReportsLab.Forms
             var row            = dgvSales.CurrentRow;
             _selectedSaleId    = Convert.ToInt32(row.Cells["SaleId"].Value);
 
-            // Retrieve ProductId from DB (not shown in grid)
             var info           = DatabaseClient.ExecuteQuery(DatabaseClient.GetSaleById,
                                      new SqlParameter("@SaleId", _selectedSaleId));
             _selectedProductId = Convert.ToInt32(info.Rows[0]["ProductId"]);
@@ -72,7 +74,6 @@ namespace ReportsLab.Forms
 
         private void cmbProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auto-fill price only in new-record mode
             if (_selectedSaleId == -1 && cmbProduct.SelectedItem is DataRowView row)
                 numSalePrice.Value = Convert.ToDecimal(row["Price"]);
         }
@@ -147,25 +148,6 @@ namespace ReportsLab.Forms
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e) => ClearForm();
-
-        private bool ValidateFields()
-        {
-            if (cmbProduct.SelectedValue == null)
-            {
-                MessageBox.Show("Please select a product.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (numQuantity.Value <= 0)
-            {
-                MessageBox.Show("Quantity must be greater than 0.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (_selectedSaleId == -1)
@@ -174,11 +156,9 @@ namespace ReportsLab.Forms
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (MessageBox.Show("Delete this sale? Stock will be restored.",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
-
             try
             {
                 var info  = DatabaseClient.ExecuteQuery(DatabaseClient.GetSaleById,
@@ -200,6 +180,25 @@ namespace ReportsLab.Forms
                 MessageBox.Show($"Error deleting sale:\n{ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e) => ClearForm();
+
+        private bool ValidateFields()
+        {
+            if (cmbProduct.SelectedValue == null)
+            {
+                MessageBox.Show("Please select a product.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (numQuantity.Value <= 0)
+            {
+                MessageBox.Show("Quantity must be greater than 0.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
         }
 
         private void ClearForm()

@@ -1,3 +1,5 @@
+using MaterialSkin.Controls;
+
 namespace ReportsLab.Forms
 {
     partial class FormSales
@@ -12,156 +14,156 @@ namespace ReportsLab.Forms
 
         private void InitializeComponent()
         {
-            pnlTop      = new Panel();
-            btnRefresh  = new Button();
-            dgvSales    = new DataGridView();
-            pnlFields   = new Panel();
-            lblStatus   = new Label();
-            lblProduct  = new Label();
-            cmbProduct  = new ComboBox();
-            lblSaleDate = new Label();
-            dtpSaleDate = new DateTimePicker();
-            lblQuantity = new Label();
-            numQuantity = new NumericUpDown();
-            lblSalePrice = new Label();
-            numSalePrice = new NumericUpDown();
-            btnAdd      = new Button();
-            btnSave     = new Button();
-            btnDelete   = new Button();
-            btnClear    = new Button();
+            pnlTop       = new System.Windows.Forms.Panel();
+            btnRefresh   = new MaterialButton();
+            dgvSales     = new System.Windows.Forms.DataGridView();
+            fieldsCard   = new MaterialCard();
+            lblStatus    = new MaterialLabel();
+            cmbProduct   = new MaterialComboBox();
+            lblDate      = new MaterialLabel();
+            dtpSaleDate  = new System.Windows.Forms.DateTimePicker();
+            lblQuantity  = new MaterialLabel();
+            numQuantity  = new System.Windows.Forms.NumericUpDown();
+            lblSalePrice = new MaterialLabel();
+            numSalePrice = new System.Windows.Forms.NumericUpDown();
+            btnAdd       = new MaterialButton();
+            btnSave      = new MaterialButton();
+            btnDelete    = new MaterialButton();
+            btnClear     = new MaterialButton();
             SuspendLayout();
 
             // ── pnlTop ───────────────────────────────────────────────────────────
-            pnlTop.Dock   = DockStyle.Top;
-            pnlTop.Height = 40;
+            pnlTop.Dock   = System.Windows.Forms.DockStyle.Top;
+            pnlTop.Height = 46;
             pnlTop.Controls.Add(btnRefresh);
 
-            btnRefresh.Text     = "Refresh";
-            btnRefresh.Location = new Point(8, 7);
-            btnRefresh.Size     = new Size(90, 26);
-            btnRefresh.Click   += btnRefresh_Click;
+            btnRefresh.Text         = "REFRESH";
+            btnRefresh.Location     = new Point(8, 8);
+            btnRefresh.Size         = new Size(110, 30);
+            btnRefresh.Type         = MaterialButton.MaterialButtonType.Outlined;
+            btnRefresh.HighEmphasis = false;
+            btnRefresh.Click       += btnRefresh_Click;
 
             // ── dgvSales ─────────────────────────────────────────────────────────
-            dgvSales.Dock                = DockStyle.Fill;
+            dgvSales.Dock                = System.Windows.Forms.DockStyle.Fill;
             dgvSales.ReadOnly            = true;
-            dgvSales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvSales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dgvSales.AllowUserToAddRows  = false;
-            dgvSales.SelectionMode       = DataGridViewSelectionMode.FullRowSelect;
+            dgvSales.SelectionMode       = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dgvSales.MultiSelect         = false;
+            dgvSales.BorderStyle         = System.Windows.Forms.BorderStyle.None;
             dgvSales.SelectionChanged   += dgvSales_SelectionChanged;
 
-            // ── pnlFields ────────────────────────────────────────────────────────
-            pnlFields.Dock      = DockStyle.Bottom;
-            pnlFields.Height    = 148;
-            pnlFields.BackColor = System.Drawing.SystemColors.ControlLight;
-            pnlFields.Controls.AddRange(new Control[]
+            // ── fieldsCard ───────────────────────────────────────────────────────
+            fieldsCard.Dock   = System.Windows.Forms.DockStyle.Bottom;
+            fieldsCard.Height = 172;
+            fieldsCard.Controls.AddRange(new System.Windows.Forms.Control[]
             {
                 lblStatus,
-                lblProduct, cmbProduct, lblSaleDate, dtpSaleDate,
+                cmbProduct, lblDate, dtpSaleDate,
                 lblQuantity, numQuantity, lblSalePrice, numSalePrice,
                 btnAdd, btnSave, btnDelete, btnClear
             });
 
             // lblStatus
-            lblStatus.Text      = "New sale";
-            lblStatus.Location  = new Point(10, 8);
-            lblStatus.Size      = new Size(600, 18);
-            lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            lblStatus.Font      = new Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
+            lblStatus.Text     = "New sale";
+            lblStatus.Location = new Point(14, 6);
+            lblStatus.Size     = new Size(600, 18);
+            lblStatus.FontType = MaterialSkin.MaterialSkinManager.fontType.Caption;
 
-            // Row 1 ── Product | Sale Date
-            lblProduct.Text      = "Product:";
-            lblProduct.Location  = new Point(10, 33);
-            lblProduct.Size      = new Size(65, 23);
-            lblProduct.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
-            cmbProduct.Location          = new Point(78, 31);
-            cmbProduct.Size              = new Size(260, 23);
-            cmbProduct.DropDownStyle     = ComboBoxStyle.DropDownList;
+            // Row 1 ── Product (wide) | Date
+            cmbProduct.Hint                  = "Product";
+            cmbProduct.Location              = new Point(12, 24);
+            cmbProduct.Size                  = new Size(370, 48);
+            cmbProduct.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbProduct.SelectedIndexChanged += cmbProduct_SelectedIndexChanged;
 
-            lblSaleDate.Text      = "Sale Date:";
-            lblSaleDate.Location  = new Point(352, 33);
-            lblSaleDate.Size      = new Size(72, 23);
-            lblSaleDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblDate.Text      = "Sale Date:";
+            lblDate.Location  = new Point(398, 36);
+            lblDate.Size      = new Size(68, 23);
+            lblDate.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
 
-            dtpSaleDate.Location = new Point(427, 31);
-            dtpSaleDate.Size     = new Size(150, 23);
-            dtpSaleDate.Format   = DateTimePickerFormat.Short;
+            dtpSaleDate.Location = new Point(469, 35);
+            dtpSaleDate.Size     = new Size(145, 23);
+            dtpSaleDate.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
             dtpSaleDate.Value    = DateTime.Today;
 
             // Row 2 ── Quantity | Sale Price
-            lblQuantity.Text      = "Quantity:";
-            lblQuantity.Location  = new Point(10, 67);
-            lblQuantity.Size      = new Size(65, 23);
-            lblQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblQuantity.Text     = "Qty:";
+            lblQuantity.Location = new Point(14, 88);
+            lblQuantity.Size     = new Size(38, 23);
+            lblQuantity.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
 
-            numQuantity.Location = new Point(78, 65);
+            numQuantity.Location = new Point(55, 85);
             numQuantity.Size     = new Size(100, 23);
             numQuantity.Minimum  = 1;
             numQuantity.Maximum  = 9999;
             numQuantity.Value    = 1;
 
-            lblSalePrice.Text      = "Sale Price:";
-            lblSalePrice.Location  = new Point(195, 67);
-            lblSalePrice.Size      = new Size(78, 23);
-            lblSalePrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblSalePrice.Text     = "Sale Price:";
+            lblSalePrice.Location = new Point(172, 88);
+            lblSalePrice.Size     = new Size(75, 23);
+            lblSalePrice.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
 
-            numSalePrice.Location      = new Point(276, 65);
+            numSalePrice.Location      = new Point(250, 85);
             numSalePrice.Size          = new Size(120, 23);
             numSalePrice.DecimalPlaces = 2;
             numSalePrice.Maximum       = 99999.99M;
             numSalePrice.Minimum       = 0;
 
-            // Row 3 ── Buttons
-            btnAdd.Text     = "Add";
-            btnAdd.Location = new Point(10, 103);
-            btnAdd.Size     = new Size(90, 32);
-            btnAdd.Click   += btnAdd_Click;
+            // Buttons
+            btnAdd.Text         = "ADD";
+            btnAdd.Location     = new Point(12, 122);
+            btnAdd.Size         = new Size(90, 36);
+            btnAdd.Type         = MaterialButton.MaterialButtonType.Contained;
+            btnAdd.HighEmphasis = true;
+            btnAdd.Click       += btnAdd_Click;
 
-            btnSave.Text     = "Save";
-            btnSave.Location = new Point(110, 103);
-            btnSave.Size     = new Size(90, 32);
-            btnSave.Click   += btnSave_Click;
+            btnSave.Text         = "SAVE";
+            btnSave.Location     = new Point(112, 122);
+            btnSave.Size         = new Size(90, 36);
+            btnSave.Type         = MaterialButton.MaterialButtonType.Contained;
+            btnSave.HighEmphasis = true;
+            btnSave.Click       += btnSave_Click;
 
-            btnDelete.Text      = "Delete";
-            btnDelete.Location  = new Point(210, 103);
-            btnDelete.Size      = new Size(90, 32);
-            btnDelete.ForeColor = System.Drawing.Color.DarkRed;
-            btnDelete.Click    += btnDelete_Click;
+            btnDelete.Text     = "DELETE";
+            btnDelete.Location = new Point(212, 122);
+            btnDelete.Size     = new Size(90, 36);
+            btnDelete.Type     = MaterialButton.MaterialButtonType.Outlined;
+            btnDelete.Click   += btnDelete_Click;
 
-            btnClear.Text     = "Clear";
-            btnClear.Location = new Point(310, 103);
-            btnClear.Size     = new Size(90, 32);
+            btnClear.Text     = "CLEAR";
+            btnClear.Location = new Point(312, 122);
+            btnClear.Size     = new Size(90, 36);
+            btnClear.Type     = MaterialButton.MaterialButtonType.Text;
             btnClear.Click   += btnClear_Click;
 
             // ── FormSales ────────────────────────────────────────────────────────
-            ClientSize    = new Size(830, 560);
-            StartPosition = FormStartPosition.CenterParent;
-            Text          = "Sales Management";
+            ClientSize    = new Size(820, 600);
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text          = "Sales";
             Controls.Add(dgvSales);
             Controls.Add(pnlTop);
-            Controls.Add(pnlFields);
+            Controls.Add(fieldsCard);
             Load += FormSales_Load;
             ResumeLayout(false);
         }
 
-        private Panel          pnlTop;
-        private Button         btnRefresh;
-        private DataGridView   dgvSales;
-        private Panel          pnlFields;
-        private Label          lblStatus;
-        private Label          lblProduct;
-        private ComboBox       cmbProduct;
-        private Label          lblSaleDate;
-        private DateTimePicker dtpSaleDate;
-        private Label          lblQuantity;
-        private NumericUpDown  numQuantity;
-        private Label          lblSalePrice;
-        private NumericUpDown  numSalePrice;
-        private Button         btnAdd;
-        private Button         btnSave;
-        private Button         btnDelete;
-        private Button         btnClear;
+        private System.Windows.Forms.Panel          pnlTop;
+        private MaterialButton                      btnRefresh;
+        private System.Windows.Forms.DataGridView   dgvSales;
+        private MaterialCard                        fieldsCard;
+        private MaterialLabel                       lblStatus;
+        private MaterialComboBox                    cmbProduct;
+        private MaterialLabel                       lblDate;
+        private System.Windows.Forms.DateTimePicker dtpSaleDate;
+        private MaterialLabel                       lblQuantity;
+        private System.Windows.Forms.NumericUpDown  numQuantity;
+        private MaterialLabel                       lblSalePrice;
+        private System.Windows.Forms.NumericUpDown  numSalePrice;
+        private MaterialButton                      btnAdd;
+        private MaterialButton                      btnSave;
+        private MaterialButton                      btnDelete;
+        private MaterialButton                      btnClear;
     }
 }

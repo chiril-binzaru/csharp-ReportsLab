@@ -1,15 +1,18 @@
+using MaterialSkin;
+using MaterialSkin.Controls;
 using Microsoft.Data.SqlClient;
 using ReportsLab.Data;
 
 namespace ReportsLab.Forms
 {
-    public partial class FormProducts : Form
+    public partial class FormProducts : MaterialForm
     {
         private int _selectedProductId = -1;
 
         public FormProducts()
         {
             InitializeComponent();
+            MaterialSkinManager.Instance.AddFormToManage(this);
         }
 
         private void FormProducts_Load(object sender, EventArgs e) => LoadProducts();
@@ -33,8 +36,8 @@ namespace ReportsLab.Forms
         {
             if (dgvProducts.CurrentRow == null) return;
 
-            var row            = dgvProducts.CurrentRow;
-            _selectedProductId = Convert.ToInt32(row.Cells["ProductId"].Value);
+            var row             = dgvProducts.CurrentRow;
+            _selectedProductId  = Convert.ToInt32(row.Cells["ProductId"].Value);
             txtProductName.Text = row.Cells["ProductName"].Value?.ToString() ?? "";
             txtCategory.Text    = row.Cells["Category"].Value?.ToString() ?? "";
             numPrice.Value      = Convert.ToDecimal(row.Cells["Price"].Value);
@@ -97,6 +100,31 @@ namespace ReportsLab.Forms
             }
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (_selectedProductId == -1)
+            {
+                MessageBox.Show("Select a product to delete.", "No Selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show($"Delete '{txtProductName.Text}'?\nThis will fail if the product has sales.",
+                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+            try
+            {
+                DatabaseClient.ExecuteNonQuery(DatabaseClient.DeleteProduct,
+                    new SqlParameter("@ProductId", _selectedProductId));
+                ClearForm();
+                LoadProducts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Cannot delete product:\n{ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnClear_Click(object sender, EventArgs e) => ClearForm();
 
         private bool ValidateFields()
@@ -111,43 +139,15 @@ namespace ReportsLab.Forms
             return true;
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (_selectedProductId == -1)
-            {
-                MessageBox.Show("Select a product to delete.", "No Selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (MessageBox.Show($"Delete '{txtProductName.Text}'?\nThis will fail if the product has sales.",
-                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                return;
-
-            try
-            {
-                DatabaseClient.ExecuteNonQuery(DatabaseClient.DeleteProduct,
-                    new SqlParameter("@ProductId", _selectedProductId));
-
-                ClearForm();
-                LoadProducts();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Cannot delete product:\n{ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void ClearForm()
         {
-            _selectedProductId = -1;
+            _selectedProductId  = -1;
             dgvProducts.ClearSelection();
-            txtProductName.Clear();
-            txtCategory.Clear();
-            numPrice.Value = 0;
-            numStock.Value = 0;
-            lblStatus.Text = "New product";
+            txtProductName.Text = "";
+            txtCategory.Text    = "";
+            numPrice.Value      = 0;
+            numStock.Value      = 0;
+            lblStatus.Text      = "New product";
         }
     }
 }

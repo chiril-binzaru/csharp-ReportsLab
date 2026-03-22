@@ -1,3 +1,5 @@
+using MaterialSkin.Controls;
+
 namespace ReportsLab.Forms
 {
     partial class FormProducts
@@ -12,153 +14,147 @@ namespace ReportsLab.Forms
 
         private void InitializeComponent()
         {
-            pnlTop         = new Panel();
-            btnRefresh     = new Button();
-            dgvProducts    = new DataGridView();
-            pnlFields      = new Panel();
-            lblStatus      = new Label();
-            lblProductName = new Label();
-            txtProductName = new TextBox();
-            lblCategory    = new Label();
-            txtCategory    = new TextBox();
-            lblPrice       = new Label();
-            numPrice       = new NumericUpDown();
-            lblStock       = new Label();
-            numStock       = new NumericUpDown();
-            btnAdd         = new Button();
-            btnSave        = new Button();
-            btnDelete      = new Button();
-            btnClear       = new Button();
+            pnlTop         = new System.Windows.Forms.Panel();
+            btnRefresh     = new MaterialButton();
+            dgvProducts    = new System.Windows.Forms.DataGridView();
+            fieldsCard     = new MaterialCard();
+            lblStatus      = new MaterialLabel();
+            txtProductName = new MaterialTextBox();
+            txtCategory    = new MaterialTextBox();
+            lblPrice       = new MaterialLabel();
+            numPrice       = new System.Windows.Forms.NumericUpDown();
+            lblStock       = new MaterialLabel();
+            numStock       = new System.Windows.Forms.NumericUpDown();
+            btnAdd         = new MaterialButton();
+            btnSave        = new MaterialButton();
+            btnDelete      = new MaterialButton();
+            btnClear       = new MaterialButton();
             SuspendLayout();
 
             // ── pnlTop ───────────────────────────────────────────────────────────
-            pnlTop.Dock   = DockStyle.Top;
-            pnlTop.Height = 40;
+            pnlTop.Dock   = System.Windows.Forms.DockStyle.Top;
+            pnlTop.Height = 46;
             pnlTop.Controls.Add(btnRefresh);
 
-            btnRefresh.Text     = "Refresh";
-            btnRefresh.Location = new Point(8, 7);
-            btnRefresh.Size     = new Size(90, 26);
-            btnRefresh.Click   += btnRefresh_Click;
+            btnRefresh.Text         = "REFRESH";
+            btnRefresh.Location     = new Point(8, 8);
+            btnRefresh.Size         = new Size(110, 30);
+            btnRefresh.Type         = MaterialButton.MaterialButtonType.Outlined;
+            btnRefresh.HighEmphasis = false;
+            btnRefresh.Click       += btnRefresh_Click;
 
             // ── dgvProducts ──────────────────────────────────────────────────────
-            dgvProducts.Dock                = DockStyle.Fill;
+            dgvProducts.Dock                = System.Windows.Forms.DockStyle.Fill;
             dgvProducts.ReadOnly            = true;
-            dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducts.AllowUserToAddRows  = false;
-            dgvProducts.SelectionMode       = DataGridViewSelectionMode.FullRowSelect;
+            dgvProducts.SelectionMode       = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.MultiSelect         = false;
+            dgvProducts.BorderStyle         = System.Windows.Forms.BorderStyle.None;
             dgvProducts.SelectionChanged   += dgvProducts_SelectionChanged;
 
-            // ── pnlFields ────────────────────────────────────────────────────────
-            pnlFields.Dock      = DockStyle.Bottom;
-            pnlFields.Height    = 148;
-            pnlFields.BackColor = System.Drawing.SystemColors.ControlLight;
-            pnlFields.Padding   = new Padding(10, 8, 10, 8);
-            pnlFields.Controls.AddRange(new Control[]
+            // ── fieldsCard (MaterialCard, docked Bottom) ─────────────────────────
+            fieldsCard.Dock    = System.Windows.Forms.DockStyle.Bottom;
+            fieldsCard.Height  = 172;
+            fieldsCard.Padding = new Padding(12, 6, 12, 6);
+            fieldsCard.Controls.AddRange(new System.Windows.Forms.Control[]
             {
                 lblStatus,
-                lblProductName, txtProductName, lblCategory, txtCategory,
+                txtProductName, txtCategory,
                 lblPrice, numPrice, lblStock, numStock,
                 btnAdd, btnSave, btnDelete, btnClear
             });
 
             // lblStatus
             lblStatus.Text      = "New product";
-            lblStatus.Location  = new Point(10, 8);
-            lblStatus.Size      = new Size(500, 18);
-            lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
-            lblStatus.Font      = new Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
+            lblStatus.Location  = new Point(14, 6);
+            lblStatus.Size      = new Size(600, 18);
+            lblStatus.FontType  = MaterialSkin.MaterialSkinManager.fontType.Caption;
 
-            // Row 1 ── Product Name | Category
-            lblProductName.Text     = "Product Name:";
-            lblProductName.Location = new Point(10, 33);
-            lblProductName.Size     = new Size(95, 23);
-            lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // txtProductName
+            txtProductName.Hint     = "Product Name";
+            txtProductName.Location = new Point(12, 24);
+            txtProductName.Size     = new Size(270, 48);
 
-            txtProductName.Location = new Point(108, 31);
-            txtProductName.Size     = new Size(200, 23);
+            // txtCategory
+            txtCategory.Hint     = "Category";
+            txtCategory.Location = new Point(292, 24);
+            txtCategory.Size     = new Size(210, 48);
 
-            lblCategory.Text     = "Category:";
-            lblCategory.Location = new Point(322, 33);
-            lblCategory.Size     = new Size(70, 23);
-            lblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // Price row
+            lblPrice.Text      = "Price:";
+            lblPrice.Location  = new Point(14, 87);
+            lblPrice.Size      = new Size(46, 23);
+            lblPrice.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
 
-            txtCategory.Location = new Point(395, 31);
-            txtCategory.Size     = new Size(180, 23);
-
-            // Row 2 ── Price | Stock
-            lblPrice.Text     = "Price:";
-            lblPrice.Location = new Point(10, 67);
-            lblPrice.Size     = new Size(95, 23);
-            lblPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
-            numPrice.Location      = new Point(108, 65);
+            numPrice.Location      = new Point(63, 84);
             numPrice.Size          = new Size(120, 23);
             numPrice.DecimalPlaces = 2;
             numPrice.Maximum       = 99999.99M;
             numPrice.Minimum       = 0;
 
-            lblStock.Text     = "Stock:";
-            lblStock.Location = new Point(245, 67);
-            lblStock.Size     = new Size(55, 23);
-            lblStock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblStock.Text      = "Stock:";
+            lblStock.Location  = new Point(200, 87);
+            lblStock.Size      = new Size(50, 23);
+            lblStock.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
 
-            numStock.Location = new Point(303, 65);
+            numStock.Location = new Point(253, 84);
             numStock.Size     = new Size(100, 23);
             numStock.Maximum  = 99999;
             numStock.Minimum  = 0;
 
-            // Row 3 ── Buttons
-            btnAdd.Text     = "Add";
-            btnAdd.Location = new Point(10, 103);
-            btnAdd.Size     = new Size(90, 32);
-            btnAdd.Click   += btnAdd_Click;
+            // Buttons
+            btnAdd.Text         = "ADD";
+            btnAdd.Location     = new Point(12, 122);
+            btnAdd.Size         = new Size(90, 36);
+            btnAdd.Type         = MaterialButton.MaterialButtonType.Contained;
+            btnAdd.HighEmphasis = true;
+            btnAdd.Click       += btnAdd_Click;
 
-            btnSave.Text     = "Save";
-            btnSave.Location = new Point(110, 103);
-            btnSave.Size     = new Size(90, 32);
-            btnSave.Click   += btnSave_Click;
+            btnSave.Text         = "SAVE";
+            btnSave.Location     = new Point(112, 122);
+            btnSave.Size         = new Size(90, 36);
+            btnSave.Type         = MaterialButton.MaterialButtonType.Contained;
+            btnSave.HighEmphasis = true;
+            btnSave.Click       += btnSave_Click;
 
-            btnDelete.Text      = "Delete";
-            btnDelete.Location  = new Point(210, 103);
-            btnDelete.Size      = new Size(90, 32);
-            btnDelete.ForeColor = System.Drawing.Color.DarkRed;
-            btnDelete.Click    += btnDelete_Click;
+            btnDelete.Text     = "DELETE";
+            btnDelete.Location = new Point(212, 122);
+            btnDelete.Size     = new Size(90, 36);
+            btnDelete.Type     = MaterialButton.MaterialButtonType.Outlined;
+            btnDelete.Click   += btnDelete_Click;
 
-            btnClear.Text     = "Clear";
-            btnClear.Location = new Point(310, 103);
-            btnClear.Size     = new Size(90, 32);
+            btnClear.Text     = "CLEAR";
+            btnClear.Location = new Point(312, 122);
+            btnClear.Size     = new Size(90, 36);
+            btnClear.Type     = MaterialButton.MaterialButtonType.Text;
             btnClear.Click   += btnClear_Click;
 
             // ── FormProducts ─────────────────────────────────────────────────────
-            ClientSize    = new Size(780, 560);
-            StartPosition = FormStartPosition.CenterParent;
-            Text          = "Products Management";
-            // order matters: Fill must be added before Top/Bottom
+            ClientSize    = new Size(780, 600);
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text          = "Products";
             Controls.Add(dgvProducts);
             Controls.Add(pnlTop);
-            Controls.Add(pnlFields);
+            Controls.Add(fieldsCard);
             Load += FormProducts_Load;
             ResumeLayout(false);
         }
 
-        private Panel         pnlTop;
-        private Button        btnRefresh;
-        private DataGridView  dgvProducts;
-        private Panel         pnlFields;
-        private Label         lblStatus;
-        private Label         lblProductName;
-        private TextBox       txtProductName;
-        private Label         lblCategory;
-        private TextBox       txtCategory;
-        private Label         lblPrice;
-        private NumericUpDown numPrice;
-        private Label         lblStock;
-        private NumericUpDown numStock;
-        private Button        btnAdd;
-        private Button        btnSave;
-        private Button        btnDelete;
-        private Button        btnClear;
+        private System.Windows.Forms.Panel         pnlTop;
+        private MaterialButton                     btnRefresh;
+        private System.Windows.Forms.DataGridView  dgvProducts;
+        private MaterialCard                       fieldsCard;
+        private MaterialLabel                      lblStatus;
+        private MaterialTextBox                    txtProductName;
+        private MaterialTextBox                    txtCategory;
+        private MaterialLabel                      lblPrice;
+        private System.Windows.Forms.NumericUpDown numPrice;
+        private MaterialLabel                      lblStock;
+        private System.Windows.Forms.NumericUpDown numStock;
+        private MaterialButton                     btnAdd;
+        private MaterialButton                     btnSave;
+        private MaterialButton                     btnDelete;
+        private MaterialButton                     btnClear;
     }
 }
