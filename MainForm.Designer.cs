@@ -43,8 +43,9 @@ namespace ReportsLab
             btnReports.HighEmphasis = true;
             btnReports.Click       += btnReports_Click;
 
-            // MainForm
+            // MainForm — fixed size, no resize
             ClientSize    = new Size(400, 340);
+            MinimumSize   = MaximumSize = new Size(400, 362); // ~22px for MaterialSkin title bar
             StartPosition = FormStartPosition.CenterScreen;
             Text          = "Store Sales Management";
             Controls.AddRange(new Control[] { btnProducts, btnSales, btnReports });

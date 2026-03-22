@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using System.Windows.Forms;
 
 namespace ReportsLab.Forms
 {
@@ -15,62 +16,83 @@ namespace ReportsLab.Forms
         private void InitializeComponent()
         {
             pnlTop        = new System.Windows.Forms.Panel();
+            tblTop        = new TableLayoutPanel();
+            pnlControls   = new System.Windows.Forms.Panel();
             cmbReport     = new MaterialComboBox();
             lblFrom       = new MaterialLabel();
             dtpFrom       = new System.Windows.Forms.DateTimePicker();
             lblTo         = new MaterialLabel();
             dtpTo         = new System.Windows.Forms.DateTimePicker();
+            pnlGenerate   = new System.Windows.Forms.Panel();
             btnGenerate   = new MaterialButton();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             SuspendLayout();
 
             // ── pnlTop ───────────────────────────────────────────────────────────
-            pnlTop.Dock   = System.Windows.Forms.DockStyle.Top;
+            pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             pnlTop.Height = 72;
-            pnlTop.Controls.AddRange(new System.Windows.Forms.Control[]
+            pnlTop.Controls.Add(tblTop);
+
+            // ── tblTop (splits toolbar: stretching left area | fixed right button) ─
+            tblTop.Dock        = System.Windows.Forms.DockStyle.Fill;
+            tblTop.ColumnCount = 2;
+            tblTop.RowCount    = 1;
+            tblTop.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100)); // left: controls
+            tblTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 196)); // right: generate
+            tblTop.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            tblTop.Controls.Add(pnlControls, 0, 0);
+            tblTop.Controls.Add(pnlGenerate, 1, 0);
+
+            // ── pnlControls (report selector + optional date pickers) ─────────────
+            pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlControls.Controls.AddRange(new System.Windows.Forms.Control[]
             {
-                cmbReport, lblFrom, dtpFrom, lblTo, dtpTo, btnGenerate
+                cmbReport, lblFrom, dtpFrom, lblTo, dtpTo
             });
 
-            // cmbReport
             cmbReport.Hint                  = "Report Type";
             cmbReport.Location              = new Point(10, 12);
             cmbReport.Size                  = new Size(230, 48);
+            cmbReport.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
             cmbReport.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbReport.SelectedIndexChanged += cmbReport_SelectedIndexChanged;
 
-            // lblFrom (hidden unless Sales by Period)
             lblFrom.Text      = "From:";
             lblFrom.Location  = new Point(256, 30);
             lblFrom.Size      = new Size(42, 23);
+            lblFrom.Anchor    = AnchorStyles.Top | AnchorStyles.Left;
             lblFrom.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblFrom.Visible   = false;
 
-            // dtpFrom
             dtpFrom.Location = new Point(301, 28);
             dtpFrom.Size     = new Size(140, 23);
+            dtpFrom.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             dtpFrom.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
             dtpFrom.Value    = DateTime.Today.AddMonths(-1);
             dtpFrom.Visible  = false;
 
-            // lblTo
             lblTo.Text     = "To:";
             lblTo.Location = new Point(452, 30);
             lblTo.Size     = new Size(28, 23);
+            lblTo.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             lblTo.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblTo.Visible  = false;
 
-            // dtpTo
             dtpTo.Location = new Point(483, 28);
             dtpTo.Size     = new Size(140, 23);
+            dtpTo.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             dtpTo.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
             dtpTo.Value    = DateTime.Today;
             dtpTo.Visible  = false;
 
-            // btnGenerate
+            // ── pnlGenerate (holds the Generate button, always right-aligned) ──────
+            pnlGenerate.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlGenerate.Controls.Add(btnGenerate);
+
             btnGenerate.Text         = "GENERATE REPORT";
-            btnGenerate.Location     = new Point(820, 18);
+            btnGenerate.Location     = new Point(12, 18);
             btnGenerate.Size         = new Size(170, 36);
+            btnGenerate.Anchor       = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnGenerate.Type         = MaterialButton.MaterialButtonType.Contained;
             btnGenerate.HighEmphasis = true;
             btnGenerate.Click       += btnGenerate_Click;
@@ -78,7 +100,7 @@ namespace ReportsLab.Forms
             // ── reportViewer1 ────────────────────────────────────────────────────
             reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
 
-            // ── FormReports ──────────────────────────────────────────────────────
+            // ── FormReports ───────────────────────────────────────────────────────
             ClientSize    = new Size(1020, 700);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text          = "Reports";
@@ -89,11 +111,14 @@ namespace ReportsLab.Forms
         }
 
         private System.Windows.Forms.Panel          pnlTop;
+        private TableLayoutPanel                    tblTop;
+        private System.Windows.Forms.Panel          pnlControls;
         private MaterialComboBox                    cmbReport;
         private MaterialLabel                       lblFrom;
         private System.Windows.Forms.DateTimePicker dtpFrom;
         private MaterialLabel                       lblTo;
         private System.Windows.Forms.DateTimePicker dtpTo;
+        private System.Windows.Forms.Panel          pnlGenerate;
         private MaterialButton                      btnGenerate;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }
