@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+        xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+
+  <DataSources>
+    <DataSource Name="StoreDB">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-0000-0000-0000-000000000003</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="TopProductsData">
+      <Query>
+        <DataSourceName>StoreDB</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="ProductName">   <DataField>ProductName</DataField>   <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Category">      <DataField>Category</DataField>      <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TotalQuantity"> <DataField>TotalQuantity</DataField> <rd:TypeName>System.Int32</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <Body>
+    <ReportItems>
+
+      <!-- Report Title -->
+      <Textbox Name="ReportTitle">
+        <CanGrow>true</CanGrow>
+        <Top>0cm</Top><Left>0cm</Left><Height>1cm</Height><Width>13cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Top-Selling Products</Value>
+                <Style><FontSize>14pt</FontSize><FontWeight>Bold</FontWeight></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Rank label -->
+      <Textbox Name="SubTitle">
+        <CanGrow>true</CanGrow>
+        <Top>1.1cm</Top><Left>0cm</Left><Height>0.6cm</Height><Width>13cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Sorted by total units sold (descending)</Value>
+                <Style><FontSize>9pt</FontSize><Color>Gray</Color></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Data Table -->
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>2cm</Width></TablixColumn>
+            <TablixColumn><Width>6cm</Width></TablixColumn>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+            <TablixColumn><Width>3cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <!-- Header row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="hRank">          <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>#</Value>              <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hProductName">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Product Name</Value>  <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hCategory">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Category</Value>      <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hTotalQuantity"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Units Sold</Value>    <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <!-- Detail row -->
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="dRank">          <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=RowNumber(Nothing)</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dProductName">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ProductName.Value</Value>   </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dCategory">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Category.Value</Value>      </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dTotalQuantity"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalQuantity.Value</Value> </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember /><TablixMember /><TablixMember /><TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Detail" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>TopProductsData</DataSetName>
+        <Top>1.9cm</Top><Left>0cm</Left>
+        <Height>1.3cm</Height><Width>15cm</Width>
+      </Tablix>
+
+    </ReportItems>
+    <Height>12cm</Height>
+  </Body>
+
+  <Width>15cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight><PageWidth>21cm</PageWidth>
+    <TopMargin>2cm</TopMargin><BottomMargin>2cm</BottomMargin>
+    <LeftMargin>2cm</LeftMargin><RightMargin>2cm</RightMargin>
+  </Page>
+
+</Report>
