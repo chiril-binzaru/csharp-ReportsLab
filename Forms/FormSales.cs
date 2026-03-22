@@ -15,6 +15,45 @@ namespace ReportsLab.Forms
         {
             InitializeComponent();
             MaterialSkinManager.Instance.AddFormToManage(this);
+            StyleGrid(dgvSales);
+        }
+
+        private static void StyleGrid(DataGridView dgv)
+        {
+            dgv.RowTemplate.Height   = 36;
+            dgv.AutoSizeRowsMode     = DataGridViewAutoSizeRowsMode.None;
+            dgv.RowHeadersVisible    = false;
+            dgv.BackgroundColor      = Color.White;
+            dgv.GridColor            = Color.FromArgb(224, 224, 224);
+            dgv.CellBorderStyle      = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            dgv.EnableHeadersVisualStyles   = false;
+            dgv.ColumnHeadersHeight         = 40;
+            dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor  = Color.FromArgb(25, 118, 210),
+                ForeColor  = Color.White,
+                Font       = new Font("Roboto", 9F, FontStyle.Bold),
+                Alignment  = DataGridViewContentAlignment.MiddleLeft,
+                Padding    = new Padding(8, 0, 0, 0),
+            };
+
+            var cellStyle = new DataGridViewCellStyle
+            {
+                BackColor          = Color.White,
+                ForeColor          = Color.FromArgb(33, 33, 33),
+                Font               = new Font("Roboto", 9F),
+                Padding            = new Padding(8, 0, 0, 0),
+                SelectionBackColor = Color.FromArgb(187, 222, 251),
+                SelectionForeColor = Color.FromArgb(33, 33, 33),
+            };
+            dgv.DefaultCellStyle = cellStyle;
+
+            dgv.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle(cellStyle)
+            {
+                BackColor = Color.FromArgb(227, 242, 253),
+            };
         }
 
         private void FormSales_Load(object sender, EventArgs e)
