@@ -50,7 +50,7 @@ namespace ReportsLab.Forms
             formLayout.Location = new Point(3, 64);
             formLayout.Name = "formLayout";
             formLayout.RowCount = 3;
-            formLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46F));
+            formLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
             formLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             formLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 172F));
             formLayout.Size = new Size(774, 533);
