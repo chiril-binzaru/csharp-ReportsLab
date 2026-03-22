@@ -12,139 +12,156 @@ namespace ReportsLab.Forms
 
         private void InitializeComponent()
         {
-            tabControl      = new TabControl();
-            tabPageList     = new TabPage();
-            pnlRefresh      = new Panel();
-            btnRefreshSales = new Button();
-            dgvSales        = new DataGridView();
-            tabPageRecord   = new TabPage();
-            pnlRecordFields = new Panel();
-            lblProduct      = new Label();
-            cmbProduct      = new ComboBox();
-            lblSaleDate     = new Label();
-            dtpSaleDate     = new DateTimePicker();
-            lblQuantity     = new Label();
-            numQuantity     = new NumericUpDown();
-            lblSalePrice    = new Label();
-            numSalePrice    = new NumericUpDown();
-            btnRecordSale   = new Button();
+            pnlTop      = new Panel();
+            btnRefresh  = new Button();
+            dgvSales    = new DataGridView();
+            pnlFields   = new Panel();
+            lblStatus   = new Label();
+            lblProduct  = new Label();
+            cmbProduct  = new ComboBox();
+            lblSaleDate = new Label();
+            dtpSaleDate = new DateTimePicker();
+            lblQuantity = new Label();
+            numQuantity = new NumericUpDown();
+            lblSalePrice = new Label();
+            numSalePrice = new NumericUpDown();
+            btnAdd      = new Button();
+            btnSave     = new Button();
+            btnDelete   = new Button();
+            btnClear    = new Button();
             SuspendLayout();
 
-            // ── tabControl ───────────────────────────────────────────────────────
-            tabControl.Dock = DockStyle.Fill;
-            tabControl.Controls.Add(tabPageList);
-            tabControl.Controls.Add(tabPageRecord);
+            // ── pnlTop ───────────────────────────────────────────────────────────
+            pnlTop.Dock   = DockStyle.Top;
+            pnlTop.Height = 40;
+            pnlTop.Controls.Add(btnRefresh);
 
-            // ── tabPageList ──────────────────────────────────────────────────────
-            tabPageList.Text    = "Sales List";
-            tabPageList.Padding = new Padding(3);
-            tabPageList.Controls.Add(dgvSales);
-            tabPageList.Controls.Add(pnlRefresh);
+            btnRefresh.Text     = "Refresh";
+            btnRefresh.Location = new Point(8, 7);
+            btnRefresh.Size     = new Size(90, 26);
+            btnRefresh.Click   += btnRefresh_Click;
 
-            // pnlRefresh
-            pnlRefresh.Dock   = DockStyle.Top;
-            pnlRefresh.Height = 40;
-            pnlRefresh.Controls.Add(btnRefreshSales);
-
-            // btnRefreshSales
-            btnRefreshSales.Text     = "Refresh";
-            btnRefreshSales.Location = new Point(8, 7);
-            btnRefreshSales.Size     = new Size(90, 26);
-            btnRefreshSales.Click   += btnRefreshSales_Click;
-
-            // dgvSales
+            // ── dgvSales ─────────────────────────────────────────────────────────
             dgvSales.Dock                = DockStyle.Fill;
             dgvSales.ReadOnly            = true;
             dgvSales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvSales.AllowUserToAddRows  = false;
             dgvSales.SelectionMode       = DataGridViewSelectionMode.FullRowSelect;
             dgvSales.MultiSelect         = false;
+            dgvSales.SelectionChanged   += dgvSales_SelectionChanged;
 
-            // ── tabPageRecord ────────────────────────────────────────────────────
-            tabPageRecord.Text = "Record Sale";
-            tabPageRecord.Controls.Add(pnlRecordFields);
+            // ── pnlFields ────────────────────────────────────────────────────────
+            pnlFields.Dock      = DockStyle.Bottom;
+            pnlFields.Height    = 148;
+            pnlFields.BackColor = System.Drawing.SystemColors.ControlLight;
+            pnlFields.Controls.AddRange(new Control[]
+            {
+                lblStatus,
+                lblProduct, cmbProduct, lblSaleDate, dtpSaleDate,
+                lblQuantity, numQuantity, lblSalePrice, numSalePrice,
+                btnAdd, btnSave, btnDelete, btnClear
+            });
 
-            // pnlRecordFields
-            pnlRecordFields.Location = new Point(30, 20);
-            pnlRecordFields.Size     = new Size(400, 280);
+            // lblStatus
+            lblStatus.Text      = "New sale";
+            lblStatus.Location  = new Point(10, 8);
+            lblStatus.Size      = new Size(600, 18);
+            lblStatus.ForeColor = System.Drawing.Color.SteelBlue;
+            lblStatus.Font      = new Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
 
-            // Row 0 – Product
-            lblProduct.Text     = "Product:";
-            lblProduct.Location = new Point(0,   14);
-            lblProduct.Size     = new Size(115,  23);
-            cmbProduct.Location = new Point(125,  10);
-            cmbProduct.Size     = new Size(240,  23);
-            cmbProduct.DropDownStyle         = ComboBoxStyle.DropDownList;
+            // Row 1 ── Product | Sale Date
+            lblProduct.Text      = "Product:";
+            lblProduct.Location  = new Point(10, 33);
+            lblProduct.Size      = new Size(65, 23);
+            lblProduct.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            cmbProduct.Location          = new Point(78, 31);
+            cmbProduct.Size              = new Size(260, 23);
+            cmbProduct.DropDownStyle     = ComboBoxStyle.DropDownList;
             cmbProduct.SelectedIndexChanged += cmbProduct_SelectedIndexChanged;
 
-            // Row 1 – Sale Date
-            lblSaleDate.Text     = "Sale Date:";
-            lblSaleDate.Location = new Point(0,   54);
-            lblSaleDate.Size     = new Size(115,  23);
-            dtpSaleDate.Location = new Point(125,  50);
-            dtpSaleDate.Size     = new Size(180,  23);
+            lblSaleDate.Text      = "Sale Date:";
+            lblSaleDate.Location  = new Point(352, 33);
+            lblSaleDate.Size      = new Size(72, 23);
+            lblSaleDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            dtpSaleDate.Location = new Point(427, 31);
+            dtpSaleDate.Size     = new Size(150, 23);
             dtpSaleDate.Format   = DateTimePickerFormat.Short;
             dtpSaleDate.Value    = DateTime.Today;
 
-            // Row 2 – Quantity
-            lblQuantity.Text     = "Quantity:";
-            lblQuantity.Location = new Point(0,   94);
-            lblQuantity.Size     = new Size(115,  23);
-            numQuantity.Location = new Point(125,  90);
-            numQuantity.Size     = new Size(130,  23);
+            // Row 2 ── Quantity | Sale Price
+            lblQuantity.Text      = "Quantity:";
+            lblQuantity.Location  = new Point(10, 67);
+            lblQuantity.Size      = new Size(65, 23);
+            lblQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            numQuantity.Location = new Point(78, 65);
+            numQuantity.Size     = new Size(100, 23);
             numQuantity.Minimum  = 1;
             numQuantity.Maximum  = 9999;
             numQuantity.Value    = 1;
 
-            // Row 3 – Sale Price
-            lblSalePrice.Text     = "Sale Price:";
-            lblSalePrice.Location = new Point(0,  134);
-            lblSalePrice.Size     = new Size(115,  23);
-            numSalePrice.Location = new Point(125, 130);
-            numSalePrice.Size     = new Size(130,  23);
+            lblSalePrice.Text      = "Sale Price:";
+            lblSalePrice.Location  = new Point(195, 67);
+            lblSalePrice.Size      = new Size(78, 23);
+            lblSalePrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            numSalePrice.Location      = new Point(276, 65);
+            numSalePrice.Size          = new Size(120, 23);
             numSalePrice.DecimalPlaces = 2;
-            numSalePrice.Maximum  = 99999.99M;
-            numSalePrice.Minimum  = 0;
+            numSalePrice.Maximum       = 99999.99M;
+            numSalePrice.Minimum       = 0;
 
-            // Button
-            btnRecordSale.Text     = "Record Sale";
-            btnRecordSale.Location = new Point(125, 185);
-            btnRecordSale.Size     = new Size(130,  35);
-            btnRecordSale.Click   += btnRecordSale_Click;
+            // Row 3 ── Buttons
+            btnAdd.Text     = "Add";
+            btnAdd.Location = new Point(10, 103);
+            btnAdd.Size     = new Size(90, 32);
+            btnAdd.Click   += btnAdd_Click;
 
-            pnlRecordFields.Controls.AddRange(new Control[]
-            {
-                lblProduct,   cmbProduct,
-                lblSaleDate,  dtpSaleDate,
-                lblQuantity,  numQuantity,
-                lblSalePrice, numSalePrice,
-                btnRecordSale
-            });
+            btnSave.Text     = "Save";
+            btnSave.Location = new Point(110, 103);
+            btnSave.Size     = new Size(90, 32);
+            btnSave.Click   += btnSave_Click;
+
+            btnDelete.Text      = "Delete";
+            btnDelete.Location  = new Point(210, 103);
+            btnDelete.Size      = new Size(90, 32);
+            btnDelete.ForeColor = System.Drawing.Color.DarkRed;
+            btnDelete.Click    += btnDelete_Click;
+
+            btnClear.Text     = "Clear";
+            btnClear.Location = new Point(310, 103);
+            btnClear.Size     = new Size(90, 32);
+            btnClear.Click   += btnClear_Click;
 
             // ── FormSales ────────────────────────────────────────────────────────
-            ClientSize    = new Size(800, 520);
+            ClientSize    = new Size(830, 560);
             StartPosition = FormStartPosition.CenterParent;
             Text          = "Sales Management";
-            Controls.Add(tabControl);
+            Controls.Add(dgvSales);
+            Controls.Add(pnlTop);
+            Controls.Add(pnlFields);
             Load += FormSales_Load;
             ResumeLayout(false);
         }
 
-        private TabControl    tabControl;
-        private TabPage       tabPageList;
-        private TabPage       tabPageRecord;
-        private Panel         pnlRefresh;
-        private Button        btnRefreshSales;
-        private DataGridView  dgvSales;
-        private Panel         pnlRecordFields;
-        private Label         lblProduct;
-        private ComboBox      cmbProduct;
-        private Label         lblSaleDate;
+        private Panel          pnlTop;
+        private Button         btnRefresh;
+        private DataGridView   dgvSales;
+        private Panel          pnlFields;
+        private Label          lblStatus;
+        private Label          lblProduct;
+        private ComboBox       cmbProduct;
+        private Label          lblSaleDate;
         private DateTimePicker dtpSaleDate;
-        private Label         lblQuantity;
-        private NumericUpDown numQuantity;
-        private Label         lblSalePrice;
-        private NumericUpDown numSalePrice;
-        private Button        btnRecordSale;
+        private Label          lblQuantity;
+        private NumericUpDown  numQuantity;
+        private Label          lblSalePrice;
+        private NumericUpDown  numSalePrice;
+        private Button         btnAdd;
+        private Button         btnSave;
+        private Button         btnDelete;
+        private Button         btnClear;
     }
 }

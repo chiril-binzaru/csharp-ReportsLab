@@ -32,10 +32,10 @@ namespace ReportsLab.Data
             cmd.ExecuteNonQuery();
         }
 
-        // ── SQL Queries ──────────────────────────────────────────────────────────
+        // ── Products ─────────────────────────────────────────────────────────────
 
         public const string GetAllProducts =
-            "SELECT ProductName, Category, Price, Stock " +
+            "SELECT ProductId, ProductName, Category, Price, Stock " +
             "FROM Products ORDER BY ProductName";
 
         public const string GetProductsForCombo =
@@ -44,8 +44,21 @@ namespace ReportsLab.Data
         public const string GetProductsForReport =
             "SELECT ProductName, Category, Price, Stock FROM Products ORDER BY ProductName";
 
+        public const string InsertProduct =
+            "INSERT INTO Products (ProductName, Category, Price, Stock) " +
+            "VALUES (@ProductName, @Category, @Price, @Stock)";
+
+        public const string UpdateProduct =
+            "UPDATE Products SET ProductName=@ProductName, Category=@Category, " +
+            "Price=@Price, Stock=@Stock WHERE ProductId=@ProductId";
+
+        public const string DeleteProduct =
+            "DELETE FROM Products WHERE ProductId=@ProductId";
+
+        // ── Sales ────────────────────────────────────────────────────────────────
+
         public const string GetAllSales =
-            "SELECT p.ProductName, s.SaleDate, s.Quantity, s.SalePrice, " +
+            "SELECT s.SaleId, p.ProductName, s.SaleDate, s.Quantity, s.SalePrice, " +
             "       CAST(s.Quantity * s.SalePrice AS DECIMAL(10,2)) AS TotalAmount " +
             "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
             "ORDER BY s.SaleDate DESC";
@@ -63,15 +76,30 @@ namespace ReportsLab.Data
             "GROUP BY p.ProductId, p.ProductName, p.Category " +
             "ORDER BY TotalQuantity DESC";
 
-        public const string InsertProduct =
-            "INSERT INTO Products (ProductName, Category, Price, Stock) " +
-            "VALUES (@ProductName, @Category, @Price, @Stock)";
+        /// <summary>Returns ProductId and Quantity for a single sale (needed for stock rollback).</summary>
+        public const string GetSaleById =
+            "SELECT ProductId, Quantity FROM Sales WHERE SaleId=@SaleId";
 
         public const string InsertSale =
             "INSERT INTO Sales (ProductId, SaleDate, Quantity, SalePrice) " +
             "VALUES (@ProductId, @SaleDate, @Quantity, @SalePrice)";
 
+        public const string UpdateSale =
+            "UPDATE Sales SET SaleDate=@SaleDate, Quantity=@Quantity, SalePrice=@SalePrice " +
+            "WHERE SaleId=@SaleId";
+
+        /// <summary>Adjusts stock when a sale's quantity changes: restores old qty, deducts new qty.</summary>
+        public const string AdjustStockForEdit =
+            "UPDATE Products SET Stock = Stock + @OldQuantity - @NewQuantity WHERE ProductId=@ProductId";
+
         public const string UpdateStock =
-            "UPDATE Products SET Stock = Stock - @Quantity WHERE ProductId = @ProductId";
+            "UPDATE Products SET Stock = Stock - @Quantity WHERE ProductId=@ProductId";
+
+        /// <summary>Restores stock when a sale is deleted.</summary>
+        public const string RestoreStock =
+            "UPDATE Products SET Stock = Stock + @Quantity WHERE ProductId=@ProductId";
+
+        public const string DeleteSale =
+            "DELETE FROM Sales WHERE SaleId=@SaleId";
     }
 }
