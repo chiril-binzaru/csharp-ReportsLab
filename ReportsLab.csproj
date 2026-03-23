@@ -20,6 +20,9 @@
     <EmbeddedResource Include="Reports\ReportProducts.rdlc" />
     <EmbeddedResource Include="Reports\ReportSalesByPeriod.rdlc" />
     <EmbeddedResource Include="Reports\ReportTopProducts.rdlc" />
+    <EmbeddedResource Include="Reports\ReportProductsByCategory.rdlc" />
+    <EmbeddedResource Include="Reports\ReportSalesByProduct.rdlc" />
+    <EmbeddedResource Include="Reports\ReportSalesByCategoryAndPeriod.rdlc" />
   </ItemGroup>
 
 </Project>

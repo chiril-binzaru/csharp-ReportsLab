@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+        xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+
+  <ReportParameters>
+    <ReportParameter Name="ParamProduct">
+      <DataType>String</DataType>
+      <Prompt>Product</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ParamGeneratedOn">
+      <DataType>String</DataType>
+      <Prompt>Generated On</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+
+  <DataSources>
+    <DataSource Name="StoreDB">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-0000-0000-0000-000000000005</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="SalesData">
+      <Query>
+        <DataSourceName>StoreDB</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="SaleDate">    <DataField>SaleDate</DataField>    <rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="Quantity">    <DataField>Quantity</DataField>    <rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="SalePrice">   <DataField>SalePrice</DataField>   <rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="TotalAmount"> <DataField>TotalAmount</DataField> <rd:TypeName>System.Decimal</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <Body>
+    <ReportItems>
+
+      <!-- Report Title -->
+      <Textbox Name="ReportTitle">
+        <CanGrow>true</CanGrow>
+        <Top>0cm</Top><Left>0cm</Left><Height>1cm</Height><Width>16cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Sales by Product</Value>
+                <Style><FontSize>14pt</FontSize><FontWeight>Bold</FontWeight></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Subtitle: product + generation date -->
+      <Textbox Name="SubTitle">
+        <CanGrow>true</CanGrow>
+        <Top>1.1cm</Top><Left>0cm</Left><Height>0.6cm</Height><Width>16cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Product: " &amp; Parameters!ParamProduct.Value &amp; "   |   Generated: " &amp; Parameters!ParamGeneratedOn.Value</Value>
+                <Style><FontSize>9pt</FontSize><Color>DimGray</Color></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Data Table -->
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+            <TablixColumn><Width>3cm</Width></TablixColumn>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+            <TablixColumn><Width>5cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <!-- Header row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="hSaleDate">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Date</Value>         <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hQuantity">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Qty</Value>          <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hSalePrice">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Unit Price</Value>   <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hTotalAmount"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Total Amount</Value> <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <!-- Detail row -->
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="dSaleDate">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!SaleDate.Value</Value>    <Style><Format>d</Format></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dQuantity">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Quantity.Value</Value>    </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dSalePrice">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!SalePrice.Value</Value>   <Style><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dTotalAmount"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalAmount.Value</Value> <Style><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <!-- Footer / Grand Total row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="fLabel">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Grand Total</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>LightGray</BackgroundColor><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="fEmpty1">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value /></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>LightGray</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="fEmpty2">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value /></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>LightGray</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="fGrandTotal"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!TotalAmount.Value)</Value><Style><FontWeight>Bold</FontWeight><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>LightGray</BackgroundColor><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember /><TablixMember /><TablixMember /><TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Detail" />
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>SalesData</DataSetName>
+        <Top>1.9cm</Top><Left>0cm</Left>
+        <Height>2cm</Height><Width>16cm</Width>
+      </Tablix>
+
+    </ReportItems>
+    <Height>14cm</Height>
+  </Body>
+
+  <Width>16cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight><PageWidth>21cm</PageWidth>
+    <TopMargin>2cm</TopMargin><BottomMargin>2cm</BottomMargin>
+    <LeftMargin>2cm</LeftMargin><RightMargin>2cm</RightMargin>
+  </Page>
+
+</Report>

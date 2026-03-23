@@ -23,6 +23,10 @@ namespace ReportsLab.Forms
             dtpFrom       = new System.Windows.Forms.DateTimePicker();
             lblTo         = new MaterialLabel();
             dtpTo         = new System.Windows.Forms.DateTimePicker();
+            lblCategory   = new MaterialLabel();
+            cmbCategory   = new MaterialComboBox();
+            lblProduct    = new MaterialLabel();
+            cmbProduct    = new MaterialComboBox();
             pnlGenerate   = new System.Windows.Forms.Panel();
             btnGenerate   = new MaterialButton();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
@@ -47,7 +51,8 @@ namespace ReportsLab.Forms
             pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlControls.Controls.AddRange(new System.Windows.Forms.Control[]
             {
-                cmbReport, lblFrom, dtpFrom, lblTo, dtpTo
+                cmbReport, lblFrom, dtpFrom, lblTo, dtpTo,
+                lblCategory, cmbCategory, lblProduct, cmbProduct
             });
 
             cmbReport.Hint                  = "Report Type";
@@ -85,6 +90,34 @@ namespace ReportsLab.Forms
             dtpTo.Value    = DateTime.Today;
             dtpTo.Visible  = false;
 
+            lblCategory.Text     = "Category:";
+            lblCategory.Location = new Point(256, 30);
+            lblCategory.Size     = new Size(68, 23);
+            lblCategory.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
+            lblCategory.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
+            lblCategory.Visible  = false;
+
+            cmbCategory.Hint                  = "Category";
+            cmbCategory.Location              = new Point(328, 14);
+            cmbCategory.Size                  = new Size(200, 48);
+            cmbCategory.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
+            cmbCategory.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbCategory.Visible               = false;
+
+            lblProduct.Text     = "Product:";
+            lblProduct.Location = new Point(256, 30);
+            lblProduct.Size     = new Size(62, 23);
+            lblProduct.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
+            lblProduct.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
+            lblProduct.Visible  = false;
+
+            cmbProduct.Hint                  = "Product";
+            cmbProduct.Location              = new Point(322, 14);
+            cmbProduct.Size                  = new Size(230, 48);
+            cmbProduct.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
+            cmbProduct.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbProduct.Visible               = false;
+
             // ── pnlGenerate (holds the Generate button, always right-aligned) ──────
             pnlGenerate.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGenerate.Controls.Add(btnGenerate);
@@ -118,6 +151,10 @@ namespace ReportsLab.Forms
         private System.Windows.Forms.DateTimePicker dtpFrom;
         private MaterialLabel                       lblTo;
         private System.Windows.Forms.DateTimePicker dtpTo;
+        private MaterialLabel                       lblCategory;
+        private MaterialComboBox                    cmbCategory;
+        private MaterialLabel                       lblProduct;
+        private MaterialComboBox                    cmbProduct;
         private System.Windows.Forms.Panel          pnlGenerate;
         private MaterialButton                      btnGenerate;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;

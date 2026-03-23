@@ -44,6 +44,13 @@ namespace ReportsLab.Data
         public const string GetProductsForReport =
             "SELECT ProductName, Category, Price, Stock FROM Products ORDER BY ProductName";
 
+        public const string GetCategories =
+            "SELECT DISTINCT Category FROM Products ORDER BY Category";
+
+        public const string GetProductsByCategory =
+            "SELECT ProductName, Category, Price, Stock FROM Products " +
+            "WHERE Category = @Category ORDER BY ProductName";
+
         public const string InsertProduct =
             "INSERT INTO Products (ProductName, Category, Price, Stock) " +
             "VALUES (@ProductName, @Category, @Price, @Stock)";
@@ -68,6 +75,18 @@ namespace ReportsLab.Data
             "       CAST(s.Quantity * s.SalePrice AS DECIMAL(10,2)) AS TotalAmount " +
             "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
             "WHERE s.SaleDate BETWEEN @StartDate AND @EndDate " +
+            "ORDER BY s.SaleDate";
+
+        public const string GetSalesByProduct =
+            "SELECT s.SaleDate, s.Quantity, s.SalePrice, " +
+            "       CAST(s.Quantity * s.SalePrice AS DECIMAL(10,2)) AS TotalAmount " +
+            "FROM Sales s WHERE s.ProductId = @ProductId ORDER BY s.SaleDate";
+
+        public const string GetSalesByCategoryAndPeriod =
+            "SELECT s.SaleDate, p.ProductName, s.Quantity, s.SalePrice, " +
+            "       CAST(s.Quantity * s.SalePrice AS DECIMAL(10,2)) AS TotalAmount " +
+            "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
+            "WHERE p.Category = @Category AND s.SaleDate BETWEEN @StartDate AND @EndDate " +
             "ORDER BY s.SaleDate";
 
         public const string GetTopProducts =
