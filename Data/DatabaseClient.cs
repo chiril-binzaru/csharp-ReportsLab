@@ -51,6 +51,14 @@ namespace ReportsLab.Data
             "SELECT ProductName, Category, Price, Stock FROM Products " +
             "WHERE Category = @Category ORDER BY ProductName";
 
+        public const string GetProductsInStock =
+            "SELECT ProductName, Category, Price, Stock FROM Products " +
+            "WHERE Stock > 0 ORDER BY ProductName";
+
+        public const string GetProductsOutOfStock =
+            "SELECT ProductName, Category, Price, Stock FROM Products " +
+            "WHERE Stock = 0 ORDER BY ProductName";
+
         public const string InsertProduct =
             "INSERT INTO Products (ProductName, Category, Price, Stock) " +
             "VALUES (@ProductName, @Category, @Price, @Stock)";

@@ -25,7 +25,8 @@ namespace ReportsLab.Forms
                 "Products by Category",
                 "Sales by Product",
                 "Sales by Category & Period",
-                "Products by Multiple Categories"
+                "Products by Multiple Categories",
+                "Products by Stock Status"
             });
 
             LoadCategoriesCombo();
@@ -79,6 +80,7 @@ namespace ReportsLab.Forms
             bool showCategory  = idx == 3 || idx == 5;
             bool showProduct   = idx == 4;
             bool showMultiCat  = idx == 6;
+            bool showStockRad  = idx == 7;
 
             lblFrom.Visible        = showDates;
             dtpFrom.Visible        = showDates;
@@ -90,6 +92,8 @@ namespace ReportsLab.Forms
             cmbProduct.Visible     = showProduct;
             lblMultiCat.Visible    = showMultiCat;
             clbCategories.Visible  = showMultiCat;
+            radInStock.Visible     = showStockRad;
+            radOutOfStock.Visible  = showStockRad;
 
             // For the combined report (idx 5), category goes to the right of the date pickers;
             // for category-only (idx 3) it starts right after the report selector.
@@ -251,6 +255,27 @@ namespace ReportsLab.Forms
                         {
                             new ReportParameter("ParamCategories",  string.Join(", ", selected)),
                             new ReportParameter("ParamGeneratedOn", DateTime.Now.ToString("g"))
+                        });
+                        break;
+                    }
+
+                    case 7: // Products by Stock Status
+                    {
+                        bool inStock = radInStock.Checked;
+                        string sql   = inStock
+                            ? DatabaseClient.GetProductsInStock
+                            : DatabaseClient.GetProductsOutOfStock;
+                        string label = inStock ? "In Stock" : "Out of Stock";
+                        var data = DatabaseClient.ExecuteQuery(sql);
+                        if (data.Rows.Count == 0) { ShowNoData(); return; }
+                        reportViewer1.LocalReport.ReportEmbeddedResource =
+                            "ReportsLab.Reports.ReportProductsByStockStatus.rdlc";
+                        reportViewer1.LocalReport.DataSources.Add(
+                            new ReportDataSource("ProductsData", data));
+                        reportViewer1.LocalReport.SetParameters(new[]
+                        {
+                            new ReportParameter("ParamStockStatus",  label),
+                            new ReportParameter("ParamGeneratedOn",  DateTime.Now.ToString("g"))
                         });
                         break;
                     }

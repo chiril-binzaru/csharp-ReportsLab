@@ -29,6 +29,8 @@ namespace ReportsLab.Forms
             cmbProduct      = new MaterialComboBox();
             lblMultiCat     = new MaterialLabel();
             clbCategories   = new System.Windows.Forms.CheckedListBox();
+            radInStock      = new MaterialSkin.Controls.MaterialRadioButton();
+            radOutOfStock   = new MaterialSkin.Controls.MaterialRadioButton();
             pnlGenerate     = new System.Windows.Forms.Panel();
             btnGenerate   = new MaterialButton();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
@@ -55,7 +57,8 @@ namespace ReportsLab.Forms
             {
                 cmbReport, lblFrom, dtpFrom, lblTo, dtpTo,
                 lblCategory, cmbCategory, lblProduct, cmbProduct,
-                lblMultiCat, clbCategories
+                lblMultiCat, clbCategories,
+                radInStock, radOutOfStock
             });
 
             cmbReport.Hint                  = "Report Type";
@@ -134,6 +137,19 @@ namespace ReportsLab.Forms
             clbCategories.CheckOnClick    = true;
             clbCategories.Visible         = false;
 
+            radInStock.Text     = "In Stock";
+            radInStock.Location = new Point(296, 22);
+            radInStock.Size     = new Size(110, 30);
+            radInStock.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
+            radInStock.Checked  = true;
+            radInStock.Visible  = false;
+
+            radOutOfStock.Text     = "Out of Stock";
+            radOutOfStock.Location = new Point(410, 22);
+            radOutOfStock.Size     = new Size(130, 30);
+            radOutOfStock.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
+            radOutOfStock.Visible  = false;
+
             // ── pnlGenerate (holds the Generate button, always right-aligned) ──────
             pnlGenerate.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGenerate.Controls.Add(btnGenerate);
@@ -171,9 +187,11 @@ namespace ReportsLab.Forms
         private MaterialComboBox                    cmbCategory;
         private MaterialLabel                       lblProduct;
         private MaterialComboBox                    cmbProduct;
-        private MaterialLabel                       lblMultiCat;
-        private System.Windows.Forms.CheckedListBox clbCategories;
-        private System.Windows.Forms.Panel          pnlGenerate;
+        private MaterialLabel                                  lblMultiCat;
+        private System.Windows.Forms.CheckedListBox            clbCategories;
+        private MaterialSkin.Controls.MaterialRadioButton      radInStock;
+        private MaterialSkin.Controls.MaterialRadioButton      radOutOfStock;
+        private System.Windows.Forms.Panel                     pnlGenerate;
         private MaterialButton                      btnGenerate;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }

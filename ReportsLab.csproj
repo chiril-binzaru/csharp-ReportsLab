@@ -24,6 +24,7 @@
     <EmbeddedResource Include="Reports\ReportSalesByProduct.rdlc" />
     <EmbeddedResource Include="Reports\ReportSalesByCategoryAndPeriod.rdlc" />
     <EmbeddedResource Include="Reports\ReportProductsByMultiCategory.rdlc" />
+    <EmbeddedResource Include="Reports\ReportProductsByStockStatus.rdlc" />
   </ItemGroup>
 
 </Project>
