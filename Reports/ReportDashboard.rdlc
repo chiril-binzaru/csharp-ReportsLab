@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+        xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+
+  <ReportParameters>
+    <ReportParameter Name="ParamGeneratedOn">
+      <DataType>String</DataType>
+      <Prompt>Generated On</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+
+  <DataSources>
+    <DataSource Name="StoreDB">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-0000-0000-0000-000000000009</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="SummaryData">
+      <Query><DataSourceName>StoreDB</DataSourceName><CommandText /></Query>
+      <Fields>
+        <Field Name="TotalOrders">    <DataField>TotalOrders</DataField>    <rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalItemsSold"> <DataField>TotalItemsSold</DataField> <rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalRevenue">   <DataField>TotalRevenue</DataField>   <rd:TypeName>System.Decimal</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TopProductsData">
+      <Query><DataSourceName>StoreDB</DataSourceName><CommandText /></Query>
+      <Fields>
+        <Field Name="ProductName">  <DataField>ProductName</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TotalQty">     <DataField>TotalQty</DataField>     <rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalRevenue"> <DataField>TotalRevenue</DataField> <rd:TypeName>System.Decimal</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="CategoryData">
+      <Query><DataSourceName>StoreDB</DataSourceName><CommandText /></Query>
+      <Fields>
+        <Field Name="Category">     <DataField>Category</DataField>     <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TotalOrders">  <DataField>TotalOrders</DataField>  <rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalRevenue"> <DataField>TotalRevenue</DataField> <rd:TypeName>System.Decimal</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="LowStockData">
+      <Query><DataSourceName>StoreDB</DataSourceName><CommandText /></Query>
+      <Fields>
+        <Field Name="ProductName"> <DataField>ProductName</DataField> <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Category">    <DataField>Category</DataField>    <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Stock">       <DataField>Stock</DataField>       <rd:TypeName>System.Int32</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <Body>
+    <ReportItems>
+
+      <!-- ═══ HEADER ══════════════════════════════════════════════════════════ -->
+
+      <Textbox Name="ReportTitle">
+        <CanGrow>true</CanGrow>
+        <Top>0cm</Top><Left>0cm</Left><Height>1cm</Height><Width>25cm</Width>
+        <Paragraphs><Paragraph>
+          <TextRuns><TextRun>
+            <Value>Sales Dashboard</Value>
+            <Style><FontSize>16pt</FontSize><FontWeight>Bold</FontWeight></Style>
+          </TextRun></TextRuns>
+          <Style><TextAlign>Center</TextAlign></Style>
+        </Paragraph></Paragraphs>
+      </Textbox>
+
+      <Textbox Name="SubTitle">
+        <CanGrow>true</CanGrow>
+        <Top>1.1cm</Top><Left>0cm</Left><Height>0.5cm</Height><Width>25cm</Width>
+        <Paragraphs><Paragraph>
+          <TextRuns><TextRun>
+            <Value>="Generated: " &amp; Parameters!ParamGeneratedOn.Value</Value>
+            <Style><FontSize>9pt</FontSize><Color>DimGray</Color></Style>
+          </TextRun></TextRuns>
+          <Style><TextAlign>Center</TextAlign></Style>
+        </Paragraph></Paragraphs>
+      </Textbox>
+
+      <!-- ═══ KPI SUMMARY ══════════════════════════════════════════════════════ -->
+
+      <Tablix Name="TablixKPI">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>8.33cm</Width></TablixColumn>
+            <TablixColumn><Width>8.33cm</Width></TablixColumn>
+            <TablixColumn><Width>8.34cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <!-- Label row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="kpiLblOrders"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL ORDERS</Value>     <Style><FontWeight>Bold</FontWeight><FontSize>9pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="kpiLblRevenue"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL REVENUE</Value>    <Style><FontWeight>Bold</FontWeight><FontSize>9pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="kpiLblItems">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL ITEMS SOLD</Value> <Style><FontWeight>Bold</FontWeight><FontSize>9pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <!-- Value row -->
+            <TablixRow>
+              <Height>1.3cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="kpiValOrders"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalOrders.Value</Value>   <Style><FontSize>20pt</FontSize><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#EBF5FB</BackgroundColor><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="kpiValRevenue"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalRevenue.Value</Value>   <Style><FontSize>20pt</FontSize><FontWeight>Bold</FontWeight><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#EBF5FB</BackgroundColor><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="kpiValItems">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalItemsSold.Value</Value> <Style><FontSize>20pt</FontSize><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#EBF5FB</BackgroundColor><Border><Style>Solid</Style></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember>
+            <TablixMember><Group Name="DetailKPI" /></TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>SummaryData</DataSetName>
+        <Top>2cm</Top><Left>0cm</Left><Height>2.1cm</Height><Width>25cm</Width>
+      </Tablix>
+
+      <!-- ═══ TOP 5 PRODUCTS (left column) ════════════════════════════════════ -->
+
+      <Textbox Name="secTopProducts">
+        <CanGrow>true</CanGrow>
+        <Top>5cm</Top><Left>0cm</Left><Height>0.6cm</Height><Width>12cm</Width>
+        <Paragraphs><Paragraph>
+          <TextRuns><TextRun>
+            <Value>TOP 5 PRODUCTS BY REVENUE</Value>
+            <Style><FontSize>9pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style>
+          </TextRun></TextRuns>
+          <Style><TextAlign>Center</TextAlign></Style>
+        </Paragraph></Paragraphs>
+        <Style><BackgroundColor>DarkSlateGray</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style>
+      </Textbox>
+
+      <Tablix Name="TablixTopProducts">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>5.5cm</Width></TablixColumn>
+            <TablixColumn><Width>2.5cm</Width></TablixColumn>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="tpHProduct"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Product</Value> <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="tpHQty">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Qty</Value>     <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="tpHRevenue"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Revenue</Value> <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="tpDProduct"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ProductName.Value</Value>  </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="tpDQty">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalQty.Value</Value>      </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="tpDRevenue"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalRevenue.Value</Value>  <Style><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember><KeepWithGroup>After</KeepWithGroup><RepeatOnNewPage>true</RepeatOnNewPage></TablixMember>
+            <TablixMember><Group Name="DetailTP" /></TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>TopProductsData</DataSetName>
+        <Top>5.7cm</Top><Left>0cm</Left><Height>1.3cm</Height><Width>12cm</Width>
+      </Tablix>
+
+      <!-- ═══ SALES BY CATEGORY (right column) ════════════════════════════════ -->
+
+      <Textbox Name="secCategory">
+        <CanGrow>true</CanGrow>
+        <Top>5cm</Top><Left>13cm</Left><Height>0.6cm</Height><Width>12cm</Width>
+        <Paragraphs><Paragraph>
+          <TextRuns><TextRun>
+            <Value>SALES BY CATEGORY</Value>
+            <Style><FontSize>9pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style>
+          </TextRun></TextRuns>
+          <Style><TextAlign>Center</TextAlign></Style>
+        </Paragraph></Paragraphs>
+        <Style><BackgroundColor>DarkSlateGray</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style>
+      </Textbox>
+
+      <Tablix Name="TablixCategory">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>5cm</Width></TablixColumn>
+            <TablixColumn><Width>3cm</Width></TablixColumn>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="catHCat">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Category</Value> <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="catHOrders">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Orders</Value>   <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="catHRevenue"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Revenue</Value>   <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="catDCat">     <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Category.Value</Value>     </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="catDOrders">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalOrders.Value</Value>  </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="catDRevenue"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalRevenue.Value</Value> <Style><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember><KeepWithGroup>After</KeepWithGroup><RepeatOnNewPage>true</RepeatOnNewPage></TablixMember>
+            <TablixMember><Group Name="DetailCat" /></TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>CategoryData</DataSetName>
+        <Top>5.7cm</Top><Left>13cm</Left><Height>1.3cm</Height><Width>12cm</Width>
+      </Tablix>
+
+      <!-- ═══ LOW STOCK ALERT ══════════════════════════════════════════════════ -->
+
+      <Textbox Name="secLowStock">
+        <CanGrow>true</CanGrow>
+        <Top>12cm</Top><Left>0cm</Left><Height>0.6cm</Height><Width>25cm</Width>
+        <Paragraphs><Paragraph>
+          <TextRuns><TextRun>
+            <Value>LOW STOCK ALERT  (≤ 5 units)</Value>
+            <Style><FontSize>9pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style>
+          </TextRun></TextRuns>
+          <Style><TextAlign>Center</TextAlign></Style>
+        </Paragraph></Paragraphs>
+        <Style><BackgroundColor>#C0392B</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style>
+      </Textbox>
+
+      <Tablix Name="TablixLowStock">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>12cm</Width></TablixColumn>
+            <TablixColumn><Width>7cm</Width></TablixColumn>
+            <TablixColumn><Width>6cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="lsHProduct">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Product</Value>  <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#C0392B</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="lsHCategory"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Category</Value> <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#C0392B</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="lsHStock">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Stock</Value>    <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#C0392B</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="lsDProduct">  <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ProductName.Value</Value> </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="lsDCategory"> <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Category.Value</Value>    </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="lsDStock">    <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Stock.Value</Value>        </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember><KeepWithGroup>After</KeepWithGroup><RepeatOnNewPage>true</RepeatOnNewPage></TablixMember>
+            <TablixMember><Group Name="DetailLS" /></TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>LowStockData</DataSetName>
+        <Top>12.7cm</Top><Left>0cm</Left><Height>1.3cm</Height><Width>25cm</Width>
+      </Tablix>
+
+    </ReportItems>
+    <Height>18cm</Height>
+  </Body>
+
+  <Width>25cm</Width>
+  <Page>
+    <PageHeight>21cm</PageHeight><PageWidth>29.7cm</PageWidth>
+    <TopMargin>2cm</TopMargin><BottomMargin>2cm</BottomMargin>
+    <LeftMargin>2cm</LeftMargin><RightMargin>2cm</RightMargin>
+  </Page>
+
+</Report>

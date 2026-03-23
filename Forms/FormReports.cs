@@ -26,7 +26,8 @@ namespace ReportsLab.Forms
                 "Sales by Product",
                 "Sales by Category & Period",
                 "Products by Multiple Categories",
-                "Products by Stock Status"
+                "Products by Stock Status",
+                "Sales Dashboard"
             });
 
             LoadCategoriesCombo();
@@ -81,6 +82,7 @@ namespace ReportsLab.Forms
             bool showProduct   = idx == 4;
             bool showMultiCat  = idx == 6;
             bool showStockRad  = idx == 7;
+            // idx == 8 (Dashboard) needs no extra controls
 
             lblFrom.Visible        = showDates;
             dtpFrom.Visible        = showDates;
@@ -278,6 +280,13 @@ namespace ReportsLab.Forms
                             new ReportParameter("ParamGeneratedOn",  DateTime.Now.ToString("g"))
                         });
                         break;
+                    }
+
+                    case 8: // Sales Dashboard
+                    {
+                        using var dashboard = new FormDashboard();
+                        dashboard.ShowDialog(this);
+                        return; // skip reportViewer1.RefreshReport()
                     }
                 }
 

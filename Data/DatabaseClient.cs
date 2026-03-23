@@ -97,6 +97,33 @@ namespace ReportsLab.Data
             "WHERE p.Category = @Category AND s.SaleDate BETWEEN @StartDate AND @EndDate " +
             "ORDER BY s.SaleDate";
 
+        public const string GetDashboardSummary =
+            "SELECT COUNT(DISTINCT s.SaleId) AS TotalOrders, " +
+            "       ISNULL(SUM(s.Quantity), 0) AS TotalItemsSold, " +
+            "       ISNULL(CAST(SUM(s.Quantity * s.SalePrice) AS DECIMAL(10,2)), 0) AS TotalRevenue " +
+            "FROM Sales s";
+
+        public const string GetDashboardTopProducts =
+            "SELECT TOP 5 p.ProductName, " +
+            "       SUM(s.Quantity) AS TotalQty, " +
+            "       CAST(SUM(s.Quantity * s.SalePrice) AS DECIMAL(10,2)) AS TotalRevenue " +
+            "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
+            "GROUP BY p.ProductId, p.ProductName " +
+            "ORDER BY TotalRevenue DESC";
+
+        public const string GetDashboardByCategory =
+            "SELECT p.Category, " +
+            "       COUNT(DISTINCT s.SaleId) AS TotalOrders, " +
+            "       CAST(SUM(s.Quantity * s.SalePrice) AS DECIMAL(10,2)) AS TotalRevenue " +
+            "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
+            "GROUP BY p.Category " +
+            "ORDER BY TotalRevenue DESC";
+
+        public const string GetDashboardLowStock =
+            "SELECT ProductName, Category, Stock " +
+            "FROM Products WHERE Stock <= 5 " +
+            "ORDER BY Stock, ProductName";
+
         public const string GetTopProducts =
             "SELECT p.ProductName, p.Category, SUM(s.Quantity) AS TotalQuantity " +
             "FROM Sales s JOIN Products p ON s.ProductId = p.ProductId " +
