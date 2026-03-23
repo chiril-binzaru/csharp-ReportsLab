@@ -87,13 +87,13 @@ namespace ReportsLab.Forms
             // for category-only (idx 3) it starts right after the report selector.
             if (idx == 5)
             {
-                lblCategory.Location = new Point(640, 30);
-                cmbCategory.Location = new Point(706, 14);
+                lblCategory.Location = new Point(680, 30);
+                cmbCategory.Location = new Point(746, 14);
             }
             else
             {
-                lblCategory.Location = new Point(256, 30);
-                cmbCategory.Location = new Point(328, 14);
+                lblCategory.Location = new Point(296, 30);
+                cmbCategory.Location = new Point(368, 14);
             }
         }
 

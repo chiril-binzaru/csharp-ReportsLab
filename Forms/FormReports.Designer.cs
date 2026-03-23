@@ -57,19 +57,19 @@ namespace ReportsLab.Forms
 
             cmbReport.Hint                  = "Report Type";
             cmbReport.Location              = new Point(10, 12);
-            cmbReport.Size                  = new Size(230, 48);
+            cmbReport.Size                  = new Size(280, 48);
             cmbReport.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
             cmbReport.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbReport.SelectedIndexChanged += cmbReport_SelectedIndexChanged;
 
             lblFrom.Text      = "From:";
-            lblFrom.Location  = new Point(256, 30);
+            lblFrom.Location  = new Point(296, 30);
             lblFrom.Size      = new Size(42, 23);
             lblFrom.Anchor    = AnchorStyles.Top | AnchorStyles.Left;
             lblFrom.FontType  = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblFrom.Visible   = false;
 
-            dtpFrom.Location = new Point(301, 28);
+            dtpFrom.Location = new Point(341, 28);
             dtpFrom.Size     = new Size(140, 23);
             dtpFrom.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             dtpFrom.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -77,13 +77,13 @@ namespace ReportsLab.Forms
             dtpFrom.Visible  = false;
 
             lblTo.Text     = "To:";
-            lblTo.Location = new Point(452, 30);
+            lblTo.Location = new Point(492, 30);
             lblTo.Size     = new Size(28, 23);
             lblTo.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             lblTo.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblTo.Visible  = false;
 
-            dtpTo.Location = new Point(483, 28);
+            dtpTo.Location = new Point(523, 28);
             dtpTo.Size     = new Size(140, 23);
             dtpTo.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             dtpTo.Format   = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -91,28 +91,28 @@ namespace ReportsLab.Forms
             dtpTo.Visible  = false;
 
             lblCategory.Text     = "Category:";
-            lblCategory.Location = new Point(256, 30);
+            lblCategory.Location = new Point(296, 30);
             lblCategory.Size     = new Size(68, 23);
             lblCategory.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             lblCategory.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblCategory.Visible  = false;
 
             cmbCategory.Hint                  = "Category";
-            cmbCategory.Location              = new Point(328, 14);
+            cmbCategory.Location              = new Point(368, 14);
             cmbCategory.Size                  = new Size(200, 48);
             cmbCategory.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
             cmbCategory.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbCategory.Visible               = false;
 
             lblProduct.Text     = "Product:";
-            lblProduct.Location = new Point(256, 30);
+            lblProduct.Location = new Point(296, 30);
             lblProduct.Size     = new Size(62, 23);
             lblProduct.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
             lblProduct.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
             lblProduct.Visible  = false;
 
             cmbProduct.Hint                  = "Product";
-            cmbProduct.Location              = new Point(322, 14);
+            cmbProduct.Location              = new Point(362, 14);
             cmbProduct.Size                  = new Size(230, 48);
             cmbProduct.Anchor                = AnchorStyles.Top | AnchorStyles.Left;
             cmbProduct.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
