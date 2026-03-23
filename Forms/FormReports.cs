@@ -24,7 +24,8 @@ namespace ReportsLab.Forms
                 "Top-Selling Products",
                 "Products by Category",
                 "Sales by Product",
-                "Sales by Category & Period"
+                "Sales by Category & Period",
+                "Products by Multiple Categories"
             });
 
             LoadCategoriesCombo();
@@ -39,7 +40,11 @@ namespace ReportsLab.Forms
             {
                 var dt = DatabaseClient.ExecuteQuery(DatabaseClient.GetCategories);
                 foreach (DataRow r in dt.Rows)
-                    cmbCategory.Items.Add(r["Category"].ToString()!);
+                {
+                    string cat = r["Category"].ToString()!;
+                    cmbCategory.Items.Add(cat);
+                    clbCategories.Items.Add(cat);
+                }
                 if (cmbCategory.Items.Count > 0)
                     cmbCategory.SelectedIndex = 0;
             }
@@ -70,18 +75,21 @@ namespace ReportsLab.Forms
         {
             int idx = cmbReport.SelectedIndex;
 
-            bool showDates    = idx == 1 || idx == 5;
-            bool showCategory = idx == 3 || idx == 5;
-            bool showProduct  = idx == 4;
+            bool showDates     = idx == 1 || idx == 5;
+            bool showCategory  = idx == 3 || idx == 5;
+            bool showProduct   = idx == 4;
+            bool showMultiCat  = idx == 6;
 
-            lblFrom.Visible     = showDates;
-            dtpFrom.Visible     = showDates;
-            lblTo.Visible       = showDates;
-            dtpTo.Visible       = showDates;
-            lblCategory.Visible = showCategory;
-            cmbCategory.Visible = showCategory;
-            lblProduct.Visible  = showProduct;
-            cmbProduct.Visible  = showProduct;
+            lblFrom.Visible        = showDates;
+            dtpFrom.Visible        = showDates;
+            lblTo.Visible          = showDates;
+            dtpTo.Visible          = showDates;
+            lblCategory.Visible    = showCategory;
+            cmbCategory.Visible    = showCategory;
+            lblProduct.Visible     = showProduct;
+            cmbProduct.Visible     = showProduct;
+            lblMultiCat.Visible    = showMultiCat;
+            clbCategories.Visible  = showMultiCat;
 
             // For the combined report (idx 5), category goes to the right of the date pickers;
             // for category-only (idx 3) it starts right after the report selector.
@@ -212,6 +220,36 @@ namespace ReportsLab.Forms
                             new ReportParameter("ParamCategory",    category),
                             new ReportParameter("ParamFrom",        dtpFrom.Value.ToString("d")),
                             new ReportParameter("ParamTo",          dtpTo.Value.ToString("d")),
+                            new ReportParameter("ParamGeneratedOn", DateTime.Now.ToString("g"))
+                        });
+                        break;
+                    }
+
+                    case 6: // Products by Multiple Categories
+                    {
+                        var selected = clbCategories.CheckedItems.Cast<string>().ToList();
+                        if (selected.Count == 0)
+                        {
+                            MessageBox.Show("Please check at least one category.", "Validation",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        var paramNames = selected.Select((_, i) => $"@c{i}").ToList();
+                        string sql = "SELECT ProductName, Category, Price, Stock FROM Products " +
+                                     $"WHERE Category IN ({string.Join(", ", paramNames)}) " +
+                                     "ORDER BY Category, ProductName";
+                        var sqlParams = selected
+                            .Select((cat, i) => new SqlParameter($"@c{i}", cat))
+                            .ToArray();
+                        var data = DatabaseClient.ExecuteQuery(sql, sqlParams);
+                        if (data.Rows.Count == 0) { ShowNoData(); return; }
+                        reportViewer1.LocalReport.ReportEmbeddedResource =
+                            "ReportsLab.Reports.ReportProductsByMultiCategory.rdlc";
+                        reportViewer1.LocalReport.DataSources.Add(
+                            new ReportDataSource("ProductsData", data));
+                        reportViewer1.LocalReport.SetParameters(new[]
+                        {
+                            new ReportParameter("ParamCategories",  string.Join(", ", selected)),
                             new ReportParameter("ParamGeneratedOn", DateTime.Now.ToString("g"))
                         });
                         break;

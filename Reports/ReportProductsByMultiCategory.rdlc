@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+        xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+
+  <ReportParameters>
+    <ReportParameter Name="ParamCategories">
+      <DataType>String</DataType>
+      <Prompt>Categories</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ParamGeneratedOn">
+      <DataType>String</DataType>
+      <Prompt>Generated On</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+
+  <DataSources>
+    <DataSource Name="StoreDB">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-0000-0000-0000-000000000007</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="ProductsData">
+      <Query>
+        <DataSourceName>StoreDB</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="ProductName"><DataField>ProductName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Category">   <DataField>Category</DataField>   <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Price">      <DataField>Price</DataField>      <rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="Stock">      <DataField>Stock</DataField>      <rd:TypeName>System.Int32</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <Body>
+    <ReportItems>
+
+      <!-- Report Title -->
+      <Textbox Name="ReportTitle">
+        <CanGrow>true</CanGrow>
+        <Top>0cm</Top><Left>0cm</Left><Height>1cm</Height><Width>16cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Products by Selected Categories</Value>
+                <Style><FontSize>14pt</FontSize><FontWeight>Bold</FontWeight></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Subtitle: selected categories + generation date -->
+      <Textbox Name="SubTitle">
+        <CanGrow>true</CanGrow>
+        <Top>1.1cm</Top><Left>0cm</Left><Height>0.6cm</Height><Width>16cm</Width>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Categories: " &amp; Parameters!ParamCategories.Value &amp; "   |   Generated: " &amp; Parameters!ParamGeneratedOn.Value</Value>
+                <Style><FontSize>9pt</FontSize><Color>DimGray</Color></Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+      </Textbox>
+
+      <!-- Data Table -->
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>6cm</Width></TablixColumn>
+            <TablixColumn><Width>4cm</Width></TablixColumn>
+            <TablixColumn><Width>3cm</Width></TablixColumn>
+            <TablixColumn><Width>3cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <!-- Header row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="hProductName"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Product Name</Value><Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hCategory">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Category</Value>    <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hPrice">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Price</Value>        <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="hStock">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>Stock</Value>        <Style><FontWeight>Bold</FontWeight></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>SteelBlue</BackgroundColor><Color>White</Color><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <!-- Detail row -->
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="dProductName"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ProductName.Value</Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dCategory">   <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Category.Value</Value>   </TextRun></TextRuns></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingLeft>4pt</PaddingLeft></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dPrice">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Price.Value</Value>       <Style><Format>C2</Format></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="dStock">      <CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Stock.Value</Value>       </TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border><PaddingRight>4pt</PaddingRight></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember /><TablixMember /><TablixMember /><TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Detail" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>ProductsData</DataSetName>
+        <Top>1.9cm</Top><Left>0cm</Left>
+        <Height>1.3cm</Height><Width>16cm</Width>
+      </Tablix>
+
+    </ReportItems>
+    <Height>12cm</Height>
+  </Body>
+
+  <Width>16cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight><PageWidth>21cm</PageWidth>
+    <TopMargin>2cm</TopMargin><BottomMargin>2cm</BottomMargin>
+    <LeftMargin>2cm</LeftMargin><RightMargin>2cm</RightMargin>
+  </Page>
+
+</Report>

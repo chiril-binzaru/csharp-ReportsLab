@@ -25,9 +25,11 @@ namespace ReportsLab.Forms
             dtpTo         = new System.Windows.Forms.DateTimePicker();
             lblCategory   = new MaterialLabel();
             cmbCategory   = new MaterialComboBox();
-            lblProduct    = new MaterialLabel();
-            cmbProduct    = new MaterialComboBox();
-            pnlGenerate   = new System.Windows.Forms.Panel();
+            lblProduct      = new MaterialLabel();
+            cmbProduct      = new MaterialComboBox();
+            lblMultiCat     = new MaterialLabel();
+            clbCategories   = new System.Windows.Forms.CheckedListBox();
+            pnlGenerate     = new System.Windows.Forms.Panel();
             btnGenerate   = new MaterialButton();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             SuspendLayout();
@@ -52,7 +54,8 @@ namespace ReportsLab.Forms
             pnlControls.Controls.AddRange(new System.Windows.Forms.Control[]
             {
                 cmbReport, lblFrom, dtpFrom, lblTo, dtpTo,
-                lblCategory, cmbCategory, lblProduct, cmbProduct
+                lblCategory, cmbCategory, lblProduct, cmbProduct,
+                lblMultiCat, clbCategories
             });
 
             cmbReport.Hint                  = "Report Type";
@@ -118,6 +121,19 @@ namespace ReportsLab.Forms
             cmbProduct.DropDownStyle         = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cmbProduct.Visible               = false;
 
+            lblMultiCat.Text     = "Categories:";
+            lblMultiCat.Location = new Point(296, 16);
+            lblMultiCat.Size     = new Size(78, 23);
+            lblMultiCat.Anchor   = AnchorStyles.Top | AnchorStyles.Left;
+            lblMultiCat.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
+            lblMultiCat.Visible  = false;
+
+            clbCategories.Location        = new Point(378, 10);
+            clbCategories.Size            = new Size(220, 52);
+            clbCategories.Anchor          = AnchorStyles.Top | AnchorStyles.Left;
+            clbCategories.CheckOnClick    = true;
+            clbCategories.Visible         = false;
+
             // ── pnlGenerate (holds the Generate button, always right-aligned) ──────
             pnlGenerate.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlGenerate.Controls.Add(btnGenerate);
@@ -155,6 +171,8 @@ namespace ReportsLab.Forms
         private MaterialComboBox                    cmbCategory;
         private MaterialLabel                       lblProduct;
         private MaterialComboBox                    cmbProduct;
+        private MaterialLabel                       lblMultiCat;
+        private System.Windows.Forms.CheckedListBox clbCategories;
         private System.Windows.Forms.Panel          pnlGenerate;
         private MaterialButton                      btnGenerate;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
