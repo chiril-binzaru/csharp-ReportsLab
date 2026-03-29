@@ -8,6 +8,9 @@ namespace ReportsLab.Data
         private const string ConnectionString =
             "Server=localhost\\SQLEXPRESS;Database=StoreDB;User Id=ReportsLabUser;Password=ReportsLab123!;TrustServerCertificate=True;";
 
+        //private const string ConnectionString =
+        //    "Server=localhost\\SQLEXPRESS;Database=StoreDB;Integrated Security=True;TrustServerCertificate=True;";
+
         public static SqlConnection GetConnection() => new(ConnectionString);
 
         /// <summary>Executes a SELECT query and returns results as a DataTable.</summary>
